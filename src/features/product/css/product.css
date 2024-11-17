@@ -1,0 +1,13 @@
+.row-2 {
+    justify-content: space-between;
+    margin: 100px auto 50px;
+}
+
+select {
+    border: 1px solid purple;
+    padding: 5px;
+}
+
+select:focus {
+    outline: none;
+}

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/1.css">
+    <link rel="stylesheet" href="/src/common/css/1.css">
+    <link rel="stylsheet" href="/src/features/product/css/product.css"
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -15,42 +16,45 @@
     <div class="container">
     <div class="navbar">
     <div class="logo">
-        <img src="/images/1.image.png" width="150px">
+        <img src="/src/features/home/images/logo.png" width="200px">
     </div>
     <nav>
         <ul id="MenuItems">
-        <li><a href="Home">Home</a></li>
+        <li><a href="/src/features/home/html/1.index.html">Home</a></li>
         <li><a href="Products">Products</a></li>
-        <li><a href="Blog">Blog</a></li>
         <li><a href="About">About Us</a></li>
         <li><a href="Contact">Contact Us</a></li>
         </ul>
     </nav>
-    <img src="/images/cart.webp" width="30px" height="30px">
-    <img src="/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
+    <img src="/src/common/images/cart.webp" width="30px" height="30px">
+    <img src="/src/features/home/images/menu1.jpeg" class="menu-icon"
+     onclick="menutoggle()">
 
         </div>
     </div>
 
 <div class="small-container">
 
-    <div class="row row-2">
+    <!-- <div class="row row-2">
         <h2>All Products</h2>
         <select>
-            <option >Default Shorting</option>
-            <option >Short by price</option>
-            <option >Short by popularity</option>
-            <option >Short by rating</option>
-            <option >Short by sale</option>
+            <option >Categories</option>
+            <option >Hoodies</option>
+            <option >Cardigan</option>
+            <option >Skirt</option>
+            <option >Cami Top</option>
+            <option >Blouse</option>
+            <option >Sweater</option>
+
         </select>
 
-    </div>
+    </div> -->
 
 
 
     <div class="row">
         <div class="col-4">
-            <img src="/images/1productjpg.jpg">
+            <img src="/src/features/home/images/1productjpg.jpg">
             <h4>Brown Casual Sweater</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -60,7 +64,7 @@
             <p>Rs.2000</p>
         </div>
         <div class="col-4">
-            <img src="/images/Product2.jpg">
+            <img src="/src/features/product/images/Product2.jpg">
             <h4>Axes Femme Ruffle Cardigan</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -70,7 +74,7 @@
             <p>Rs.2000</p>
         </div>
     <div class="col-4">
-        <img src="/images/product3.jpg">
+        <img src="/src/features/product/images/product3.jpg">
         <h4>Himekaji Blouse</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -80,7 +84,7 @@
         <p>Rs.3000</p>
         </div>
     <div class="col-4">
-    <img src="/images/product4.jpg">
+    <img src="/src/features/product/images/product4.jpg">
     <h4>Vintage Lace Ruffle Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9733;</span>
@@ -90,7 +94,7 @@
     <p>Rs.1500</p>
         </div>
         <div class="col-4">
-            <img src="/images/product5.jpg">
+            <img src="/src/features/product/images/product5.jpg">
             <h4>Sweey Lace Cardigan Sweater</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -100,7 +104,7 @@
             <p>Rs.2800</p>
         </div>
         <div class="col-4">
-            <img src="/images/Product6.jpg">
+            <img src="/src/features/product/images/product6.jpg">
             <h4>Gothic Babydoll Dress</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -110,7 +114,7 @@
             <p>Rs.2500</p>
     </div>
     <div class="col-4">
-        <img src="/images/product7.jpeg">
+        <img src="/src/features/product/images/product7.jpeg">
         <h4>Off The Shoulder Sweater</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -120,7 +124,7 @@
         <p>Rs.3200</p>
 </div>
 <div class="col-4">
-    <img src="/images/product8.jpeg">
+    <img src="/src/features/product/images/product8.jpeg">
     <h4>Pink Outer Plus Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9734;</span>
@@ -130,7 +134,7 @@
     <p>Rs.2200</p>
 </div>
 <div class="col-4">
-        <img src="/images/procduct9jpg.jpg">
+        <img src="/src/features/product/images/procduct9jpg.jpg">
         <h4> Lace Over Pleated Skirt</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -140,7 +144,7 @@
         <p>Rs.2000</p>
         </div>
         <div class="col-4">
-            <img src="/images/product10.jpg">
+            <img src="/src/features/product/images/product10.jpg">
             <h4>Cargo Mini-Skirt</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -150,7 +154,7 @@
             <p>Rs.2000</p>
     </div>
     <div class="col-4">
-        <img src="/images/product11.jpg">
+        <img src="/src/features/product/images/product11.jpg">
         <h4>Lace Mini-skirt</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -160,7 +164,7 @@
         <p>Rs.1700</p>
 </div>
 <div class="col-4">
-    <img src="/images/product4.jpg">
+    <img src="/src/features/product/images/product4.jpg">
     <h4>Vintage Lace Ruffle Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9733;</span>
@@ -171,15 +175,6 @@
 </div>
     </div>
 
-    <div class="page-btn">
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>&#8594;</span>
-        
-    </div>
-    
 </div>
 
 
@@ -195,7 +190,7 @@
     <div class="container">
         <div class="row">
             <div class="footer-col-1">
-                <img src="/images/1.image.png">
+                <img src="/src/features/home/images/logo.png">
                 <p>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</p>
             </div>
                 <div class="footer-col-2">
@@ -218,6 +213,6 @@
    <!------js for  toggle menu-->
 
 
-   <script src="/js/index.js"></script>
+   <script src="/src/common/js/index.js"></script>
 </body>
 </html>
