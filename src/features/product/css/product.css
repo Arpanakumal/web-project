@@ -11,3 +11,7 @@ select {
 select:focus {
     outline: none;
 }
+.add-to-cart{
+    color:purple;
+    align-items: center;
+}

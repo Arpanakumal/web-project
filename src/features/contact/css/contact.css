@@ -1,0 +1,131 @@
+/* Contact Page Styles */
+.contact-section {
+    padding: 70px 0;
+    background: #f5f5f5;
+}
+
+.contact-title {
+    text-align: center;
+    color: rgb(72, 8, 91);
+    margin-bottom: 40px;
+    font-size: 32px;
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.info-item {
+    margin-bottom: 30px;
+}
+
+.info-item h3 {
+    color: rgb(87, 6, 112);
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.info-item p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.info-item i {
+    color: rgb(109, 13, 139);
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.social-links {
+    margin-top: 30px;
+}
+
+.social-links a {
+    color: rgb(109, 13, 139);
+    margin-right: 20px;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: rgb(217, 130, 239);
+}
+
+.contact-form form {
+    background: rgb(221, 174, 235);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(109, 13, 139);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    
+    background: rgb(109, 13, 139);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: rgb(217, 130, 239);
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    
+    .contact-info,
+    .contact-form {
+        width: 100%;
+    }
+    
+    .contact-title {
+        font-size: 24px;
+    }
+}

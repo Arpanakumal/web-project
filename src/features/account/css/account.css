@@ -1,0 +1,141 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins", sans-serif;
+}
+
+body {
+    background-color: pink;
+    background: linear-gradient(#b443c3, #f9f4fa);
+    
+
+}
+
+.container {
+    background: white;
+    width: 450px;
+    padding: 1.5rem;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(115, 88, 128, 0.9);
+    
+
+}
+
+form {
+    margin: 0 2 rem;
+}
+
+form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1.3rem;
+    margin-bottom: 0.4rem;
+}
+
+input {
+    color: inherit;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1PX solid palevioletred;
+    padding-left: 1.5rem;
+    font-size: 15px;
+}
+
+.input-group {
+    padding: 1% 0;
+    position: relative;
+}
+
+.input-group i {
+    top: 1.3rem;
+    position: absolute;
+    color: black;
+}
+
+.input:focus {
+    background-color: transparent;
+    outline: transparent;
+    border-bottom: rgb(235, 118, 235);
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+label {
+    color: rgb(98, 49, 103);
+    position: relative;
+    left: 1.2em;
+    top: 1.3em;
+    cursor: auto;
+    transition: 0.3s ease all;
+
+}
+
+input:focus~label,
+input:not(:placeholder-shown)~label {
+    top: 3em;
+    color: #b443c3;
+    font-size: 15px;
+}
+
+.btn {
+    font-size: 1.1rem;
+    padding: 8px 0;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    width: 100%;
+    background: rgb(208, 144, 226);
+    color: white;
+    cursor: pointer;
+    transition: 0.9s;
+}
+
+.btn:hover {
+    background: rgb(211, 128, 211);
+
+}
+
+.icon i {
+    color: #b443c3;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: 2px solid white;
+    margin: 0 15px;
+    transition: 1s;
+}
+
+.icon i:hover {
+    background: black;
+    font-size: 1.6rem;
+    border: 2px solid rgb(120, 30, 130);
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 4rem;
+    margin-top: 0.9rem;
+    font-weight: bold;
+}
+
+button {
+    color: pink;
+    border: none;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+button:hover {
+    text-decoration: underline;
+    color: purple;
+
+}
