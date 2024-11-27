@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/common/css/1.css">
-    <link rel="stylesheet" href="/src/features/cart/css/cart.css">
+    <link rel="stylesheet" href="../../../common/css/1.css">
+    <link rel="stylesheet" href="../../../features/cart/css/cart.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,20 +18,19 @@
     <div class="container">
     <div class="navbar">
     <div class="logo">
-        <img src="/src/features/home/images/logo.png" width="150px">
+        <img src="../../../features/home/images/logo.png" width="150px">
     </div>
     <nav>
         <ul id="MenuItems">
-        <li><a href="/src/features/home/html/1.index.html">Home</a></li>
-        <li><a href="/src/features/product/html/product.html">Products</a></li>
+        <li><a href="../../../features/home/html/1.index.html">Home</a></li>
+        <li><a href="../../../features/product/html/product.html">Products</a></li>
         
-        <li><a href="/src/features/about/html/about.html">About Us</a></li>
-        <li><a href="/src/features/contact/html/contact.html">Contact Us</a></li>
+        <li><a href="../../../features/about/html/about.html">About Us</a></li>
+        <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
         </ul>
     </nav>
-    <img src="/src/common/images/cart.webp" width="30px" height="30px">
-    <img src="/src/features/home/images/menu1.jpeg" class="menu-icon"
-     onclick="menutoggle()">
+    <img src="../../../common/images/cart.webp" width="30px" height="30px">
+    <img src="../../../features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
 
         </div>
     </div>
@@ -43,97 +42,151 @@
 <div class="small-conatiner cart-page">
 
     <table>
+        <thead>
         <tr>
             <th>Product</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Total</th>
+            <th></th>
         
         </tr>
+        </thead>
+        <tbody id="cart-items">
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="/src/features/home/images/cat2.jpeg" >
+                    <img src="../../../features/home/images/cat2.jpeg" >
                     <div>
-                        <p>Casual Sweater</p>
-                        <small>Price:2000</small>
+                        <h3>Casual Sweater</h3>
+                        <small>Size:S | Color:pink</small>
                         <br>
-                        <a href="">Remove</a>
+                    
                     </div>
                 </div>
             </td>
-            <td><input type="number" value="1"></td>
-        
-        </tr>
-
-        <tr>
             <td>
-                <div class="cart-info">
-                    <img src="/src/features/product/images/procduct9jpg.jpg" >
-                    <div>
-                        <p>Lace over Pleated Skirt</p>
-                        <small>Price:2000</small>
-                        <br>
-                        <a href="">Remove</a>
-                    </div>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" class="quantity-input" onchange="updateCartTotal()">
+                    <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
                 </div>
             </td>
-            <td><input type="number" value="1"></td>
-
-        </tr>
-
-        <tr>
-            <td>
-                <div class="cart-info">
-                    <img src="/src/features/product/images/product6.jpg" >
-                    <div>
-                        <p>Gothic Babydoll Dress</p>
-                        <small>Price:2500</small>
-                        <br>
-                        <a href="">Remove</a>
-                    </div>
-                </div>
-            </td>
-            <td><input type="number" value="1"></td>
+            <td>Rs.2000</td>
+                            <td class="item-total">Rs.2000</td>
+                            <td>
+                                <i class="fa fa-times"  onclick="removeItem(this)" ></i>
+                            </td>
+    
         
         </tr>
 
         <tr>
             <td>
                 <div class="cart-info">
-                    <img src="/src/features/product/images/Product2.jpg" >
+                    <img src="../../../features/product/images/procduct9jpg.jpg" >
                     <div>
-                        <p>Axes Femme Ruffle Cardigan</p>
-                        <small>Price:2000</small>
+                        <h3>Lace over Pleated Skirt</h3>
+                        <small>Size:M | Color:Grey</small>
                         <br>
-                        <a href="">Remove</a>
+                    
                     </div>
                 </div>
             </td>
-            <td><input type="number" value="1"></td>
+            <td>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" class="quantity-input" onchange="updateCartTotal()">
+                    <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+            </td>
+            <td>Rs.2000</td>
+            <td class="item-total">Rs.2000</td>
+            <td>
+                <i class="fa fa-times"  onclick="removeItem(this)" ></i>
+            </td>
+        
+
+        </tr>
+
+        <tr>
+            <td>
+                <div class="cart-info">
+                    <img src="../../../features/product/images/product6.jpg" >
+                    <div>
+                        <h3>Gothic Babydoll Dress</h3>
+                        <small>Size:S | Color:Ash Grey</small>
+                        <br>
+                    
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" class="quantity-input" onchange="updateCartTotal()">
+                    <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+            </td>
+            <td>Rs.2500</td>
+            <td class="item-total">Rs.2000</td>
+            <td>
+                <i class="fa fa-times"  onclick="removeItem(this)" ></i>
+            </td>
+        
+        </tr>
+
+        <tr>
+            <td>
+                <div class="cart-info">
+                    <img src="../../../features/product/images/Product2.jpg" >
+                    <div>
+                        <h3>Axes Femme Ruffle Cardigan</h3>
+                        <small>Size:L | Color:Pink</small>
+                        <br>
+                    
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="quantity-control">
+                    <button class="quantity-btn minus" onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" value="1" min="1" class="quantity-input" onchange="updateCartTotal()">
+                    <button class="quantity-btn plus" onclick="updateQuantity(this, 1)">+</button>
+                </div>
+            </td>
             
+            <td>Rs.2000</td>
+            <td class="item-total">Rs.2000</td>
+            <td>
+                <i class="fa fa-times"  onclick="removeItem(this)" ></i>
+            </td>
         </tr>
+    </tbody>
     </table>
+    </div>
 
 <div class="cart-total">
     <h3>Cart-Summary</h3>
-
-    <div class="total-price">
-        <table>
-        
-            <tr>
+        <div class="total-price">
+            <table>
+        <tr>
                 <td>Subtotal</td>
-                <td id="subtotal">Rs.4,498.00</td>
-            </tr>
+                <td id="subtotal"><strong>Rs.8500</strong></td>
+        </tr>
+        <tr>
+                <td>Shipping</td>
+                <td>Rs.150</td>
+        </tr>
         
-            <tr>
+        <tr>
                 <td><strong>Total</strong></td>
-                <td id="total"><strong>rs.4,597.00</strong></td>
-            </tr>
+                <td id="total"><strong>Rs.8650</strong></td>
+        </tr>
             
         </table>
     </div>
-</div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to checkout</button>
 </div>
 
 
@@ -147,11 +200,11 @@
     <div class="container">
         <div class="row">
             <div class="footer-col-1">
-                <img src="/src/features/home/images/logo.png">
-                <p>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</p>
+                <img src="../../../features/home/images/logo.png">
+                <h2>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</h2>
             </div>
                 <div class="footer-col-2">
-                <h3>Follow Us</h3>
+                <h1>Follow Us</h1>
                 <ul>
                     <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a></li>
                     <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
@@ -162,15 +215,95 @@
             
         </div>
         <hr>
-        <p class="copyright">Copyright 2024-Clothing Palette</p>
+        <h2 class="copyright">Copyright @ 2024-Clothing Palette</h2>
     </div>
 </div> 
+
+
+<script>
+    function menutoggle() {
+        const menuItems = document.getElementById("MenuItems");
+        if (menuItems.style.display === "block") {
+            menuItems.style.display = "none";
+        } else {
+            menuItems.style.display = "block";
+        }
+    }
+
+    // Update quantity
+    function updateQuantity(button, change) {
+        const input = button.parentElement.querySelector('.quantity-input');
+        let value = parseInt(input.value) + change;
+        if (value < 1) value = 1;
+        input.value = value;
+        updateCartTotal();
+    }
+
+    // Remove item
+    function removeItem(button) {
+        const row = button.closest('tr');
+        row.remove();
+        updateCartTotal();
+        
+        // Check if cart is empty
+        const cartItems = document.getElementById('cartItems');
+        if (cartItems.children.length === 0) {
+            showEmptyCart();
+        }
+    }
+
+    // Show empty cart message
+    function showEmptyCart() {
+        const cartContainer = document.querySelector('.cart-container');
+        cartContainer.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="../../product/html/product.html" class="continue-shopping">
+                    Continue Shopping
+                </a>
+            </div>
+        `;
+    }
+
+    // Update cart total
+    function updateCartTotal() {
+        let subtotal = 0;
+        const shipping = 150;
+        
+        document.querySelectorAll('tr').forEach(row => {
+            const quantity = row.querySelector('.quantity-input')?.value || 0;
+            const price = row.querySelector('td:nth-child(3)')?.textContent || '0';
+            const itemPrice = parseFloat(price.replace('Rs', '').replace(',', ''));
+            const itemTotal = quantity * itemPrice;
+            
+            if (row.querySelector('.item-total')) {
+                row.querySelector('.item-total').textContent = `Rs${itemTotal.toFixed(2)}`;
+            }
+            
+            subtotal += itemTotal;
+        });
+        
+        const total = subtotal + shipping;
+        
+        document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+        document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+    }
+
+    // Checkout function
+    function checkout() {
+        alert('Thank you got yuor purchase!' );
+    }
+</script>
+
+
 
 
 <!------js for  toggle menu-->
 
 
-<script src="/src/common/js/index.js"></script>
+<script src="../../../common/js/index.js"></script>
 
 
 

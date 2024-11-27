@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/common/css/1.css">
-    <link rel="stylsheet" href="/src/features/product/css/product.css"
+    <link rel="stylesheet" href="../../../common/css/1.css">
+    <link rel="stylsheet" href="../css/product.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -17,46 +17,43 @@
     <div class="container">
     <div class="navbar">
     <div class="logo">
-        <img src="/src/features/home/images/logo.png" width="200px">
+        <img src="../../home/images/logo.png" width="200px">
     </div>
     <nav>
         <ul id="MenuItems">
-        <li><a href="/src/features/home/html/1.index.html">Home</a></li>
-        <li><a href="Products">Products</a></li>
-        <li><a href="/src/features/about/html/about.html">About Us</a></li>
-        <li><a href="/src/features/contact/html/contact.html">Contact Us</a></li>
+        <li><a href="../../home/html/1.index.html">Home</a></li>
+        <li><a href="../html/product.html">Products</a></li>
+        <li><a href="../../about/html/about.html">About Us</a></li>
+        <li><a href="../../contact/html/contact.html">Contact Us</a></li>
         </ul>
     </nav>
-    <img src="/src/common/images/cart.webp" width="30px" height="30px">
-    <img src="/src/features/home/images/menu1.jpeg" class="menu-icon"
-     onclick="menutoggle()">
+    <img src="../../../common/images/cart.webp" width="30px" height="30px">
+    <img src="../../../features/home/images/menu1.jpeg" class="menu-icon"onclick="menutoggle()">
 
         </div>
     </div>
 
 <div class="small-container">
 
-    <!-- <div class="row row-2">
-        <h2>All Products</h2>
-        <select>
-            <option >Categories</option>
-            <option >Hoodies</option>
-            <option >Cardigan</option>
-            <option >Skirt</option>
-            <option >Cami Top</option>
-            <option >Blouse</option>
-            <option >Sweater</option>
+    <div class=" row-2">
 
+        <h1>Our Products</h1>
+        <select>
+            <option value="">Default Sorting</option>
+            <option value="">Sort by Price</option>
+            <option value="">Sort by Popularity</option>
+            <option value="">Sort by Rating</option>
+            <option value="">Sort by Sale</option>
         </select>
 
-    </div> -->
+    </div>
 
 
 
     <div class="row">
         <div class="col-4">
-
-            <img src="/src/features/product/images/product5.jpg">
+            <a href="../html/product.html"></a>
+            <img src="../images/product5.jpg">
             <h4>Sweet Lace Cardigan Sweater</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -68,7 +65,7 @@
         </div>
     
         <div class="col-4">
-            <img src="/src/features/product/images/Product2.jpg">
+            <img src="../images/Product2.jpg">
             <h4>Axes Femme Ruffle Cardigan</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -76,9 +73,10 @@
             <span>&#9733;</span>
             <span>&#9734;</span>
             <p>Rs.2000</p>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
     <div class="col-4">
-        <img src="/src/features/product/images/product3.jpg">
+        <img src="../images/product3.jpg">
         <h4>Himekaji Blouse</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -86,9 +84,10 @@
         <span>&#9733;</span>
         <span>&#9733;</span>
         <p>Rs.3000</p>
+        <button class="add-to-cart">Add to Cart</button>
         </div>
     <div class="col-4">
-    <img src="/src/features/product/images/product4.jpg">
+    <img src="../images/product4.jpg">
     <h4>Vintage Lace Ruffle Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9733;</span>
@@ -96,9 +95,10 @@
     <span>&#9734;</span>
     <span>&#9734;</span>
     <p>Rs.1500</p>
+    <button class="add-to-cart">Add to Cart</button>
         </div>
         <div class="col-4">
-            <img src="/src/features/home/images/1productjpg.jpg">
+            <img src="../../home/images/1productjpg.jpg">
             <h4>Brown Casual Sweater</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -106,10 +106,11 @@
             <span>&#9734;</span>
             <span>&#9734;</span>
             <p>Rs.2000</p>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
     
         <div class="col-4">
-            <img src="/src/features/product/images/product6.jpg">
+            <img src="../images/product6.jpg">
             <h4>Gothic Babydoll Dress</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -117,9 +118,10 @@
             <span>&#9733;</span>
             <span>&#9733;</span>
             <p>Rs.2500</p>
+            <button class="add-to-cart">Add to Cart</button>
     </div>
     <div class="col-4">
-        <img src="/src/features/product/images/product7.jpeg">
+        <img src="../images/product7.jpeg">
         <h4>Off The Shoulder Sweater</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -127,9 +129,10 @@
         <span>&#9734;</span>
         <span>&#9734;</span>
         <p>Rs.3200</p>
+        <button class="add-to-cart">Add to Cart</button>
 </div>
 <div class="col-4">
-    <img src="/src/features/product/images/product8.jpeg">
+    <img src="../images/product8.jpeg">
     <h4>Pink Outer Plus Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9734;</span>
@@ -137,9 +140,10 @@
     <span>&#9734;</span>
     <span>&#9734;</span>
     <p>Rs.2200</p>
+    <button class="add-to-cart">Add to Cart</button>
 </div>
 <div class="col-4">
-        <img src="/src/features/product/images/procduct9jpg.jpg">
+        <img src="../images/procduct9jpg.jpg">
         <h4> Lace Over Pleated Skirt</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -147,9 +151,10 @@
         <span>&#9734;</span>
         <span>&#9734;</span>
         <p>Rs.2000</p>
+        <button class="add-to-cart">Add to Cart</button>
         </div>
         <div class="col-4">
-            <img src="/src/features/product/images/product10.jpg">
+            <img src="../images/product10.jpg">
             <h4>Cargo Mini-Skirt</h4>
             <span>&#9733;</span>
             <span>&#9733;</span>
@@ -157,9 +162,10 @@
             <span>&#9733;</span>
             <span>&#9734;</span>
             <p>Rs.2000</p>
+            <button class="add-to-cart">Add to Cart</button>
     </div>
     <div class="col-4">
-        <img src="/src/features/product/images/product11.jpg">
+        <img src="../images/product11.jpg">
         <h4>Lace Mini-skirt</h4>
         <span>&#9733;</span>
         <span>&#9733;</span>
@@ -167,9 +173,10 @@
         <span>&#9734;</span>
         <span>&#9734;</span>
         <p>Rs.1700</p>
+        <button class="add-to-cart">Add to Cart</button>
 </div>
 <div class="col-4">
-    <img src="/src/features/product/images/product4.jpg">
+    <img src="../images/product4.jpg">
     <h4>Vintage Lace Ruffle Cami-Top</h4>
     <span>&#9733;</span>
     <span>&#9733;</span>
@@ -177,6 +184,7 @@
     <span>&#9733;</span>
     <span>&#9733;</span>
     <p>Rs.1500</p>
+    <button class="add-to-cart">Add to Cart</button>
 </div>
     </div>
 
@@ -195,11 +203,11 @@
     <div class="container">
         <div class="row">
             <div class="footer-col-1">
-                <img src="/src/features/home/images/logo.png">
-                <p>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</p>
+                <img src="../../../features/home/images/logo.png">
+                <h2>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</h2>
             </div>
                 <div class="footer-col-2">
-                <h3>Follow Us</h3>
+                <h1>Follow Us</h1>
                 <ul>
                     <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a></li>
                     <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
@@ -210,7 +218,7 @@
             
         </div>
         <hr>
-        <p class="copyright">Copyright 2024-Clothing Palette</p>
+        <h2 class="copyright">Copyright @ 2024-Clothing Palette</h2>
     </div>
    </div> 
 
@@ -218,6 +226,6 @@
    <!------js for  toggle menu-->
 
 
-   <script src="/src/common/js/index.js"></script>
+   <script src="../../../common/js/index.js"></script>
 </body>
 </html>

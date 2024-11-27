@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/common/css/1.css">
+    <link rel="stylesheet" href="../../../../common/css/1.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="/src/features/account/css/styless.css">
+    <link rel="stylesheet" href="../../../../features/account/css/styless.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -19,22 +19,22 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <img src="/src/features/home/images/logo.png" width="200px">
+                    <img src="../../../../features/home/images/logo.png" width="200px">
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="Home">Home</a></li>
-                        <li><a href="/src/features/product/html/product.html">Products</a></li>
-                        <li><a href="/src/features/about/html/about.html">About Us</a></li>
-                        <li><a href="/src/features/contact/html/contact.html">Contact Us</a></li>
+                        <li><a href="../../../home/html/1.index.html">Home</a></li>
+                        <li><a href="../../../../features/product/html/product.html">Products</a></li>
+                        <li><a href="../../../../features/about/html/about.html">About Us</a></li>
+                        <li><a href="../../../../features/contact/html/contact.html">Contact Us</a></li>
                     </ul>
                 </nav>
 
-                <a href="/src/features/cart/html/cart.html">
-                    <img src="/src/common/images/cart.webp" width="30px" height="30px">
+                <a href="../../../../features/cart/html/cart.html">
+                    <img src="../../../../common/images/cart.webp" width="30px" height="30px">
                 </a>
 
-                <img src="/src/features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
+                <img src="../../../../features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
             </div>
 
 
@@ -61,6 +61,11 @@
                     </div>
 
                     <input type="submit" id="btn" value="Register">
+                <div class="class-links">
+                    <p>Already have an account?</p>
+                    <input type="submit" id="btn" value="Login">
+            
+                </div>
 
                 </form>
 
@@ -100,7 +105,7 @@
 
 
 <!------js for  toggle menu-->
-<script src="/src/common/js/index.js"></script>
+<script src="../../../common/js/index.js"></script>
 
 
 </body>
