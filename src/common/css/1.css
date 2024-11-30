@@ -49,6 +49,7 @@ nav ul li a {
 nav ul li a:hover {
     color: rgb(217, 130, 239);
 }
+
 .logo img {
     width: 150px;
 }
@@ -58,6 +59,7 @@ nav ul li a:hover {
     color: rgb(109, 13, 139);
     font-size: 1.2rem;
 }
+
 
 .menu-icon {
     width: 28px;
@@ -123,6 +125,7 @@ p {
 .header.row {
     margin-top: 50px;
 }
+
 
 /*-----categories*/
 

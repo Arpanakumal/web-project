@@ -1,6 +1,6 @@
 .small-container {
 
-    background: #c697e7;
+    background: #e790f3;
     height: 480px;
     padding: 1.5rem;
     margin: 50px auto;
@@ -12,23 +12,26 @@
     border: 1px solid #d386d8;
 
 
-}body {
+}
+
+body {
     font-family: sans-serif;
 }
-input[type="text"],
-    input[type="email"],
-    input[type="password"],
 
-    select {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+
+select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    }
+}
 
 
-h2{
+h2 {
     text-align: center;
 }
 
@@ -39,17 +42,17 @@ label {
 }
 
 input[type="submit"] {
-    background-color: #cc89f3;
+    background-color: #6f0682;
     color: white;
     padding: 12px 20px;
     border: none;
     cursor: pointer;
     margin-top: 5px;
 
-    
+
 }
 
 input[type="submit"]:hover {
-    background-color: #7f32a5;
+    background-color: #c84bad;
 }
 

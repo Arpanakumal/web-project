@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<div class="header">
+    <div class="header">
         <div class="container">
             <div class="navbar">
                 <div class="logo">
@@ -25,7 +25,7 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="../../../home/html/1.index.html">Home</a></li>
+                        <li><a href="../../../home/html/homepage.html">Home</a></li>
                         <li><a href="../../../../features/product/html/product.html">Products</a></li>
                         <li><a href="../../../../features/about/html/about.html">About Us</a></li>
                         <li><a href="../../../../features/contact/html/contact.html">Contact Us</a></li>
@@ -39,32 +39,27 @@
                 <img src="../../../../features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
             </div>
 
+            
+            <div class="small-container">
+                <form action="login.php" method="post">
+                    <h2>Login</h2>
+                    <div class="group">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required><br><br>
+                    </div>
+                    <div class="group">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required><br><br>
+                        <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
+                    </div>
 
-
-    
-    <?php
-    if (isset($_GET['error'])) {
-        echo "<p style='color:red;'>" . $_GET['error'] . "</p>";
-    }
-    ?>
-    <div class="small-container">
-        <form action="login.php" method="post">
-        <h2>Login</h2>
-            <div class="group">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br><br>
+                    <input type="submit" value="Login">
+                </form>
             </div>
-            <div class="group">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-            </div>
-
-            <input type="submit" value="Login">
-        </form>
-    </div>
 
 </body>
+<script src="../../js/login.js"></script>
 
 </html>

@@ -3,7 +3,7 @@
 // Debugging: Check if form data is received
 var_dump($_POST);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
   $username = $_POST['username'] ?? '';
   $email = $_POST['email'] ?? '';
   $password = $_POST['password'] ?? '';
@@ -51,6 +51,7 @@ $sql = "INSERT INTO users (username,email, password) VALUES ('$name', '$email', 
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
+ 
   echo "Registration successful!";
 } else {
   echo "Error: " . $conn->error;

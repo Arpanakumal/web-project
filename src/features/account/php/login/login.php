@@ -1,44 +1,63 @@
 <?php
 
-// Database credentials 
+
+ini_set('display_errors', 1); 
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log');
+error_reporting(E_ALL); 
+
+// Database credentials
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "account";
 
-// Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-// Get user inputs
-$email = $_POST["email"];
-$password = $_POST["password"];
 
-// Check if email exists
-$sql = "SELECT * FROM users WHERE email = '$email'";
-$result = $conn->query($sql);
+if (isset($_SERVER["REQUEST_METHOD"]) == "POST") {
+    $email = $_POST["email"] ?? null;
+    $password = $_POST["password"] ?? null;
 
-if ($result->num_rows == 0) {
-    header("Location: login_index.php?error=Invalid email or password");
-    exit();
-} else {
-    $row = $result->fetch_assoc();
-    $storedPassword = $row["password"];
-
-    // Important: You should compare the entered password with the  password stored in the database
-    if ($password == $storedPassword) {
-        echo "Welcome back";
-    
-        exit();
-    } else {
-        header("Location: login_index.php?error=Invalid email or password");
-
+    if (!$email || !$password) {
+        header("Location: login.html?error=Please fill out all fields");
         exit();
     }
+
+    // Prepared statement to prevent SQL injection
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        header("Location: login.html?error=Invalid email or password");
+        exit();
+    } else {
+        $row = $result->fetch_assoc();
+        $storedPassword = $row["password"];
+
+        // Verify hashed password
+        if (password_verify($password, $storedPassword)) {
+            // Redirect after successful login
+            header("Location: homepage.html");
+            exit();
+        } else {
+            header("Location: login.html?error=Invalid email or password");
+            exit();
+        }
+    }
+} else {
+    header("Location: login.html?error=Invalid request");
+    exit();
 }
 
+// Close connection
 $conn->close();

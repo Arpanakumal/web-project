@@ -23,7 +23,7 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="../src/features/home/html/1.index.html">Home</a></li>
+                        <li><a href="../src/features/home/html/homepage.html">Home</a></li>
                         <li><a href="../src/features/product/html/product.html">Products</a></li>
                         <li><a href="../src/features/about/html/about.html">About Us</a></li>
                         <li><a href="../src/features/contact/html/contact.html">Contact Us</a></li>

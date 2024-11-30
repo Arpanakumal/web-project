@@ -1,0 +1,74 @@
+{
+    "Image1": {
+        "id": 1,
+        "name": "Sweet Lace cardigan Sweater",
+        "price": 2800,
+        "image": "../images/product5.jpg"
+    },
+    "Image2": {
+        "id": 2,
+        "name": "Axes Femme Ruffle Cardigan",
+        "price": 2000,
+        "image": "../images/product2.jpg"
+    },
+    "Image3": {
+        "id": 3,
+        "name": "Himekaji Blouse",
+        "price": 3000,
+        "image": "../images/product3.jpg"
+    },
+    "Image4": {
+        "id": 4,
+        "name": "Vintage lace Ruffle Cami Top",
+        "price": 1500,
+        "image": "../images/product4.jpg"
+    },
+    "Image5": {
+        "id": 5,
+        "name": "Sleeveless Top",
+        "price": 1500,
+        "image": "../../home/images/top.jpg"
+    },
+    "Image6": {
+        "id": 6,
+        "name": "Gothic Babydoll Dress",
+        "price": 200,
+        "image": "../images/product6.jpg"
+    },
+    "Image7": {
+        "id": 7,
+        "name": "Off The shoulder Top",
+        "price": 3200,
+        "image": "../images/product7.jpeg"
+    },
+    "Image8": {
+        "id": 8,
+        "name": "Pink Outer Plus Cami Top",
+        "price": 2200,
+        "image": "../images/product8.jpeg"
+    },
+    "Image9": {
+        "id": 9,
+        "name": "Lace Over Pleated Skirt",
+        "price": 2000,
+        "image": "../images/product9jpg.jpg"
+    },
+    "Image10": {
+        "id": 10,
+        "name": "Cargo Mini Skirt",
+        "price": 2000,
+        "image": "../images/product10.jpg"
+    },
+    "Image11": {
+        "id": 11,
+        "name": "Lace Mini Skirt",
+        "price": 1700,
+        "image": "../images/product11.jpg"
+    },
+    "Image12": {
+        "id": 12,
+        "name": "Vintage Skirt",
+        "price": 1900,
+        "image": "../images/skirt.jpg"
+    }
+}

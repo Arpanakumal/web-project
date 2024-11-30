@@ -1,4 +1,4 @@
-/* .row-2 {
+.row-2 {
     justify-content: space-between;
     margin: 100px auto 50px;
     display: flex;
@@ -59,15 +59,15 @@ select:focus {
 }
 
 /* Star Rating */
-/* .rating {
+.rating {
     color: #ffd700;
     margin: 8px 0;
 }
 
 /* Price */
-/* .col-4 p {
+.col-4 p {
     font-weight: bold;
     color: var(--primary-color);
     font-size: 1.2rem;
     margin: 8px 0;
-} */
+}
