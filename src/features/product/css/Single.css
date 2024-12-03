@@ -1,45 +1,58 @@
 /*--------css for single product detail-----*/
 
 
-.single-product{
-    margin-top:80px;
+.single-product {
+    margin-top: 80px;
 }
-.single-product .col-2 img{
-    padding:0;
+
+.single-product .col-2 img {
+    padding: 0;
 }
-.single-product .col-2{
-    padding:20px;
+
+.single-product .col-2 {
+    padding: 20px;
 }
-.single-product h4{
-    margin:20px 0;
-    font-size:22px;
-    font-weight:bold;
+
+.single-product h4 {
+    margin: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
 }
-.single-product select{
-    display:block;;
-    padding:10px;
-    margin-top:20px;
+
+.single-product select {
+    display: block;
+    ;
+    padding: 10px;
+    margin-top: 20px;
 
 }
-.single-product input{
-    margin-top:20px;
-    width:40px;
-    height:30px;
+
+.single-product input {
+    margin-top: 20px;
+    width: 40px;
+    height: 30px;
     padding-left: 10px;
-    font-size:20px;
-    margin-right:10px;
-    border:1px solid rgb(178, 133, 189);
+    font-size: 20px;
+    margin-right: 10px;
+    border: 1px solid rgb(178, 133, 189);
     margin-bottom: 20px;
 }
 
-input:focus{
-    outline:none;
+input:focus {
+    outline: none;
 }
-.small-img-row{
-    display:flex;
+
+.small-img-row {
+    display: flex;
     justify-content: space-between;
 }
-.small-img-col{
-    flex-basis:24%;
-    cursor:pointer;
+
+.small-img-col {
+    flex-basis: 24%;
+    cursor: pointer;
+}
+
+.btn {
+    color:white; 
+    background-color:purple;
 }

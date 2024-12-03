@@ -1,6 +1,6 @@
 <?php
 
-// Debugging: Check if form data is received
+
 var_dump($_POST);
 
 if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
@@ -17,7 +17,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
   echo "Invalid request method!";
 }
 
-// Database credentials (replace with your actual values)
+
 $servername = "localhost";
 $username = "root";
 $password = "";
