@@ -1,0 +1,26 @@
+.main-content {
+    background-color: white;
+    padding: 3% 0;
+}
+
+h1 {
+
+    margin-left: 50px;
+
+}
+
+.col-4 {
+    width: 18%;
+    background-color: rgb(244, 187, 247);
+    margin: 3%;
+    padding: 2%;
+    text-align: center;
+    float: left;
+
+}
+
+.wrapper {
+    padding: 1%;
+    width: 80%;
+    margin: 0 auto;
+}
