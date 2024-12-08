@@ -51,9 +51,13 @@ $sql = "INSERT INTO users (username,email, password) VALUES ('$name', '$email', 
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
- 
+
   echo "Registration successful!";
+  header("location:homepage.php");
+  exit;
 } else {
+  header("Location: login.php?error=Invalid email or password");
+  exit;
   echo "Error: " . $conn->error;
 }
 
