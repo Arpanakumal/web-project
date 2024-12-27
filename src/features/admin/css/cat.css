@@ -49,3 +49,10 @@ table tr td {
     background-color: rgb(239, 70, 23);
 
 }
+
+.success{
+    color:rgb(172, 17, 186);
+}
+.error{
+    color:red;
+}

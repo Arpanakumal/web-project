@@ -1,13 +1,18 @@
 <<?php
+
+
     session_start();
+    include('login_check.php');
 
 
     if (($_SERVER['REQUEST_METHOD']) == 'POST') {
         $Full_name = $_POST['Full_name'] ?? '';
         $Username = $_POST['Username'] ?? '';
-        $Password = ($_POST['Password']) ?? ''; //password encryption
+        $Password = ($_POST['Password']) ?? '';
 
         
+        // $siteurl = "http://localhost/arpanaproject/src/features/home/html/homepage.html";
+
         $servername = "localhost";
         $username = "root";
         $password = "";
@@ -67,26 +72,28 @@
                     </div>
                     <nav>
                         <ul id="MenuItems">
-                            <li><a href="../homepage/admin_homepage.php">Home</a></li>
+                            <li><a href="../homepage/index.php">Home</a></li>
                             <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                             <li><a href="../../php/product/manage_product.php">Products</a></li>
                             <li><a href="../../php/category/manage_cat.php">Category</a></li>
                             <li><a href="../../php/order/manage_order.php">Order</a></li>
+                            <li><a href="../admin/logout/logout.php">Logout</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
 
-        <div class="main-cpntent">
+        <div class="main-content">
             <div class="wrapper">
                 <h1>Add Admin</h1>
 
                 <?php
-                if(isset($_SESSION['add'])){
+                if (isset($_SESSION['add'])) {
                     echo $_SESSION['add'];
-                    unset($_SESSION['add']);                }
-                
+                    unset($_SESSION['add']);
+                }
+
                 ?>
                 <div class="small-container">
                     <form action="" method="POST">

@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+include('../admin/login_check.php');
 if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     // $Full_name = $_POST['Full_name'] ?? '';
     // $username = $_POST['username'] ?? '';
@@ -58,11 +59,12 @@ $conn->close();
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                    <li><a href="../homepage/admin_homepage.php">Home</a></li>
+                    <li><a href="../homepage/index.php">Home</a></li>
                         <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
                         <li><a href="../../php/order/manage_order.php">Order</a></li>
+                        <li><a href="../admin/logout/logout.php">Logout</a></li>
                     </ul>
                 </nav>
             </div>

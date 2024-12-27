@@ -5,6 +5,7 @@
 
 .small-container {
 
+
     background: #fff;
     height: 375px;
     padding: 1.5rem;
@@ -17,6 +18,7 @@
     padding: 20px;
     border: 1px solid #ccc;
 }
+
 
 body {
     font-family: sans-serif;
