@@ -1,6 +1,10 @@
 <?php
 session_start();
-include('../admin/login_check.php');
+if (!isset($_SESSION['user'])) {
+    $_SESSION['no-login-msg'] = "<div class='error'>Please login to access Admin Panel</div>";
+    header("Location:../admin/login.php");
+    exit();
+}
 
 if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     // $Full_name = $_POST['Full_name'] ?? '';
@@ -22,9 +26,9 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     }
 }
 
-$conn->close();
 
-    ?>
+
+?>
 
 
 
@@ -56,7 +60,7 @@ $conn->close();
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                    <li><a href="../homepage/index.php">Home</a></li>
+                        <li><a href="../homepage/index.php">Home</a></li>
                         <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
@@ -75,9 +79,26 @@ $conn->close();
         <div class="wrapper">
             <h1>Manage Category</h1>
             <br /> <br /> <br />
+            <?php
+            if (isset($_SESSION['add'])) {
+                echo $_SESSION['add'];
+                unset($_SESSION['add']);
+            }
+            if (isset($_SESSION['remove'])) {
+                echo $_SESSION['remove'];
+                unset($_SESSION['remove']);
+            }
+            if (isset($_SESSION['delete'])) {
+                echo $_SESSION['delete'];
+                unset($_SESSION['delete']);
+            }
+
+
+
+            ?><br>
 
             <!---butoon to addadminm---->
-            <a href="#" class="btn-primary">Add Category</a>
+            <a href="../category/add_cat.php" class="btn-primary">Add Category</a>
             <br /> <br /> <br />
 
 
@@ -87,33 +108,75 @@ $conn->close();
             <table class="tbl-full">
                 <tr>
                     <th>S.N</th>
-                    <th>Username</th>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Feature</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
-                <tr>
+
+                <?php
+                $sql = "SELECT * from cat_admin";
+                $result = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($result);
+                $sn = 1;
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $id = $row['id'];
+                        $title = $row['title'];
+                        $image = $row['image'];
+                        $feature = $row['feature'];
+                        $status = $row['status'];
+                ?>
+
+
+                        <tr>
+                            <td><?php echo $sn++; ?></td>
+                            <td><?php echo $title; ?></td>
+                            <td><?php
+                                if ($image) {
+                                ?>
+                                    <img src="./images/<?php echo $image; ?>" width="100px">
+                                <?php
+
+                                } else {
+                                    echo "<div class='error'>Image not added</div>";
+                                }
+
+                                ?>
+                            </td>
+                            <td><?php echo $feature; ?></td>
+                            <td><?php echo $status; ?></td>
+                            <td>
+                                <a href="./update_cat.php?id=<?php echo $id;?>" class="btn-secondary">Update Category</a>
+                                <a href="./delete_cat.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Category</a>
+                            </td>
+                        </tr>
+                    <?php
+
+                    }
+                } else {
+
+                    ?>
+                    <tr>
+                        <td colspan="6">
+                            <div class='error'>No Category added</div>
+                        </td>
+                    </tr>
+                <?php
+                }
+
+
+                ?>
+                <!-- <tr>
                     <td>1.</td>
                     <td>Arpana</td>
                     <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
+                        <a href="#" class="btn-secondary">Update Category</a>
+                        <a href="#" class="btn-danger">Delete Category</a>
                     </td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>Meowwyyy</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Puppyyy</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
-                    </td>
-                </tr>
+                </tr> -->
+
 
             </table>
 

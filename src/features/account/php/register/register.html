@@ -9,6 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Account page</title>
+    <style>
+        .group {
+    position: relative;
+    margin-bottom: 15px;
+    }
+
+.group i {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+
+.group input {
+    padding-left: 30px;
+}
+
+#eye {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+    </style>
 </head>
 
 <body>
@@ -47,10 +73,10 @@
                         <input type="text" id="email" name="email" placeholder="Enter Email">
                     </div>
                     <div class="group">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter password">
-                        <!-- <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i> -->
+                        <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
                     </div>
                     <p id="validationError" style="color: red;"></p>
                     <input type="submit" id="btn" value="Register">

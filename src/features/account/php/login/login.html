@@ -10,6 +10,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Login</title>
+    <style>
+        .group {
+    position: relative;
+    margin-bottom: 15px;
+    }
+
+.group i {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+
+.group input {
+    padding-left: 30px;
+}
+
+#eye {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+    </style>
 
 
 
@@ -49,11 +75,11 @@
                         <input type="email" id="email" name="email" required><br><br>
                     </div>
                     <div class="group">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
                         <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" required><br><br>
-                        <!-- <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i> -->
+                        <input type="password" id="password" name="password" required>
+                        <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
                     </div>
+                    
 
                     <input type="submit" value="Login">
                 </form>

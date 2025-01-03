@@ -21,7 +21,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "account";
+$dbname = "admin";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -31,29 +31,28 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-// Get user inputs
+
 $name = $_POST["username"];
 $email = $_POST["email"];
 $password = $_POST["password"];
 
-// Check if email already exists
+
 $sql = "SELECT * FROM users WHERE  email = '$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  // Email already exists
+
   header("Location: register.php?error=Email already exists");
   exit();
 }
 
-// Construct the SQL INSERT query
 $sql = "INSERT INTO users (username,email, password) VALUES ('$name', '$email', '$password')";
 
-// Execute the query
+
 if ($conn->query($sql) === TRUE) {
 
   echo "Registration successful!";
-  header("location:homepage.php");
+  header("location:../../home/homepage.php");
   exit;
 } else {
   header("Location: login.php?error=Invalid email or password");

@@ -1,39 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    $_SESSION['no-login-msg'] = "<div class='error'>Please login to access Admin Panel</div>";
-    header("Location:../admin/login.php");
-    exit();
-}
-if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-    // $Full_name = $_POST['Full_name'] ?? '';
-    // $username = $_POST['username'] ?? '';
-    // $password = md5($_POST['password']) ?? ''; //password encryption
-
-
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "admin";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-}
-
-$conn->close();
-
-    ?>
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +7,7 @@ $conn->close();
     <link rel="stylesheet" href="../../../../common/css/1.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="../../php/admin/css/adminnn.css">
     <link rel="stylesheet" href="../../css/cat.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -59,7 +23,7 @@ $conn->close();
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                    <li><a href="../homepage/index.php">Home</a></li>
+                        <li><a href="../homepage/index.php">Home</a></li>
                         <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
@@ -72,53 +36,75 @@ $conn->close();
     </div>
 
 
-<!-----categories----->
-
-<div class="main-content">
+    <div class="main-content">
         <div class="wrapper">
-        <h1>Manage Order</h1>
+            <h1>Update Category</h1>
+            <br><br>
+            <?php
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $sql = "SELECT * from cat_admin where id =$id";
+                $result = mysqli_query($conn, $sql);
 
-        <br /> <br /> <br />
+                $count = mysqli_num_rows($result);
+                if ($count == 1) {
+                } else {
+                    $_SESSION['no-cat-found'] = "<div class='error'>Categort not found</div>";
+                    header("Location:manage_cat.php");
+                    exit();
+                }
+            } else {
+                header("Location:manage_cat.php");
+                exit();
+            }
+
+            ?>
 
 
 
 
+            <div class="small-container">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="group">
+
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" placeholder="Category Title">
+                    </div>
+
+                    <div class="group">
+                        <label for="current image">Current Image:</label>
+                        Image will be displayed here
+                    </div>
+                    <div class="group">
+                        <label for="image">New Image:</label>
+                        <input type="file" name="image">
+                    </div>
+                    <div class="group">
+                        <label for="feature">Feature:</label><br>
+                        <input type="radio" name="feature" value="yes">Yes
+                        <input type="radio" name="feature" value="no">No
+                    </div>
+                    <div class="group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+
+                    </div><br>
+
+                    <input type="submit" name="submit" value="Add Category" class="btn-secondary">
+
+                </form>
 
 
-<table class="tbl-full">
-    <tr>
-        <th>S.N</th>
-        <th>Username</th>
-        <th>Actions</th>
-    </tr>
-    <tr>
-        <td>1.</td>
-        <td>Arpana</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>2.</td>
-        <td>Meowwyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>3.</td>
-        <td>Puppyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
+            </div>
 
-</table>
+        </div>
     </div>
-</div>
+
+
+
 
 
 

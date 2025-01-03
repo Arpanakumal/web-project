@@ -91,6 +91,14 @@ if ($conn->connect_error) {
                         <label for="username">Username:</label>
                         <input type="text" id="Username" name="Username" value="<?php echo $Username; ?>"><br><br>
                     </div>
+                    <div class="group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+
+                    </div><br>
 
                     <div class="group">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
@@ -115,18 +123,16 @@ if ($conn->connect_error) {
         where id = '$id'
         ";
 
-        $result = mysqli_query($conn,$sql);
+        $result = mysqli_query($conn, $sql);
 
-        if($result==true){
+        if ($result == true) {
 
             $_SESSION['update'] = "<div class='success'>Admin Udated successfully</div>";
             header("Location: manage_admin.php");
-        }else{
+        } else {
             $_SESSION['update'] = "<div class='error'>Failed to delete admin</div>";
             header("Location: manage_admin.php");
-
         }
-
     }
 
 

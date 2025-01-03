@@ -2,7 +2,11 @@
 
 
     session_start();
-    include('login_check.php');
+    if (!isset($_SESSION['user'])) {
+        $_SESSION['no-login-msg'] = "<div class='error'>Please login to access Admin Panel</div>";
+        header("Location:../admin/login.php");
+        exit();
+    }
 
 
     if (($_SERVER['REQUEST_METHOD']) == 'POST') {
@@ -10,7 +14,7 @@
         $Username = $_POST['Username'] ?? '';
         $Password = ($_POST['Password']) ?? '';
 
-        
+
         // $siteurl = "http://localhost/arpanaproject/src/features/home/html/homepage.html";
 
         $servername = "localhost";
@@ -107,6 +111,13 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <label for="username">Username:</label>
                             <input type="text" id="Username" name="Username" placeholder="Enter Your Username"><br><br>
+                        </div>
+                        <div class="group">
+                            <label for="status">Status</label>
+                            <select name="status" id="status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
                         </div>
                         <div class="group">
                             <i class="fa fa-lock" aria-hidden="true"></i>

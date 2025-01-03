@@ -1,6 +1,10 @@
 <?php
 session_start();
-include('../admin/login_check.php');
+if (!isset($_SESSION['user'])) {
+    $_SESSION['no-login-msg'] = "<div class='error'>Please login to access Admin Panel</div>";
+    header("Location:../admin/login.php");
+    exit();
+}
 if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     // $Full_name = $_POST['Full_name'] ?? '';
     // $username = $_POST['username'] ?? '';

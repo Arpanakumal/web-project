@@ -1,16 +1,16 @@
 <?php
 
 
-ini_set('display_errors', 1); 
+ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', 'error.log');
-error_reporting(E_ALL); 
+error_reporting(E_ALL);
 
 // Database credentials
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "account";
+$dbname = "admin";
 
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 
-if (isset($_SERVER["REQUEST_METHOD"]) == "POST") {
+if (isset($_SERVER["REQUEST_METHOD"]) === "POST") {
     $email = $_POST["email"] ?? null;
     $password = $_POST["password"] ?? null;
 
@@ -47,7 +47,9 @@ if (isset($_SERVER["REQUEST_METHOD"]) == "POST") {
         // Verify hashed password
         if (password_verify($password, $storedPassword)) {
             // Redirect after successful login
-            header("Location: homepage.html");
+            header("Location:../../home/homepage.php");
+
+            echo "login successful";
             exit();
         } else {
             header("Location: login.html?error=Invalid email or password");

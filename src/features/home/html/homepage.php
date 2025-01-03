@@ -1,16 +1,16 @@
 <!-- <?php
-// Start session
-session_start();
+        // Start session
+        session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    // If not logged in, redirect to the login page
-    header("Location: login.php");
-    header("location:register.php");
-    exit();
-}
+        // Check if the user is logged in
+        if (!isset($_SESSION['admin'])) {
+            // If not logged in, redirect to the login page
+            header("Location: ../../account/php/login/login.php");
+            header("location:../../account/php/register/register.php");
+            exit();
+        }
 
-?> -->
+        ?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +46,7 @@ if (!isset($_SESSION['user_id'])) {
                     <a href="../../../features/cart/html/cart.html">
                         <img src="../../../common/images/cart.webp" width="30px" height="30px">
                     </a>
-                    
+
                     <img src="../images/menu.jpeg" class="menu-icon" onclick="menutoggle()">
                 </nav>
 

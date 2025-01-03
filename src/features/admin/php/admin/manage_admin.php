@@ -1,7 +1,11 @@
 <?php
 
 session_start();
-include('login_check.php');
+if (!isset($_SESSION['user'])) {
+    $_SESSION['no-login-msg'] = "<div class='error'>Please login to access Admin Panel</div>";
+    header("Location:../admin/login.php");
+    exit();
+}
 // Check if the user is logged in
 // if (!isset($_SESSION['admin'])) {
 //     $_SESSION['error'] = "Please login to access the admin panel!";
