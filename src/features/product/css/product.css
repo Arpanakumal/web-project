@@ -1,0 +1,21 @@
+.items img {
+    background-color: #f8f8f8;
+    /* Light gray background */
+    border: 1px solid #ddd;
+    /* Optional border */
+    padding: 10px;
+    /* Optional padding */
+    border-radius: 5px;
+    /* Optional rounded corners */
+    width: 100%;
+    /* Ensure consistent sizing */
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    object-fit: cover;
+    /* Crop or fit the image nicely */
+}
+
+.add-to-cart {
+    color: purple;
+}

@@ -8,12 +8,22 @@ let products = [];
 let cart = [];
 
 
-iconCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
-closeCart.addEventListener('click', () => {
-    body.classList.toggle('showCart');
-})
+if (iconCart) {
+    iconCart.addEventListener('click', () => {
+        body.classList.toggle('showCart');
+    });
+} else {
+    console.error('.icon-cart element not found');
+}
+
+if (closeCart) {
+    closeCart.addEventListener('click', () => {
+        body.classList.toggle('showCart');
+    });
+} else {
+    console.error('.close element not found');
+}
+
 
 const addDataToHTML = () => {
     listProductHTML.innerHTML = '';
@@ -37,7 +47,7 @@ const addDataToHTML = () => {
 listProductHTML.addEventListener('click', (event) => {
     let positionClick = event.target;
     if (positionClick.classList.contains('addCart')) {
-        let product_id =positionClick.parentElement.dataset.id;
+        let product_id = positionClick.parentElement.dataset.id;
         alert('1');
     }
 })
