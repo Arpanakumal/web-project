@@ -76,6 +76,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 echo $_SESSION['upload'];
                 unset($_SESSION['upload']);
             }
+        
 
 
 
@@ -109,51 +110,50 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                     <input type="submit" name="submit" value="Add Category" class="btn-secondary">
 
                 </form>
-
                 <?php
                 if (isset($_POST['submit'])) {
                     $title = $_POST['title'];
-
                     $feature = isset($_POST['feature']) ? $_POST['feature'] : "no";
                     $status = isset($_POST['status']) ? $_POST['status'] : "active";
 
-                    if (isset($_FILES['image']['name'])) {
+                    if (isset($_FILES['image']['name']) && $_FILES['image']['name'] != "") {
                         $image_name = $_FILES['image']['name'];
 
-                        $ext = end(explode('.', $image_name));
-                        $image_name = "Tops" . rand(000, 999) . '.' . $ext;
+                        $ext = pathinfo($image_name, PATHINFO_EXTENSION);
+
+                        $image_name = "Tops_" . rand(000, 999) . '.' . $ext;
+
                         $source_path = $_FILES['image']['tmp_name'];
-                        $destination_path = ".images/" . $image_name;
+                        $destination_path = "images/" . $image_name;
+
+
                         $upload = move_uploaded_file($source_path, $destination_path);
 
                         if ($upload == false) {
                             $_SESSION['upload'] = "<div class='error'>Failed to upload image</div>";
-                            header("Loaction:add_cat.php");
+                            header("Location: add_cat.php");
                             exit();
                         }
                     } else {
                         $image_name = "";
                     }
 
-                    $sql = "INSERT INTO cat_admin (title, feature,image, status) 
-                        VALUES ('$title', '$feature', '$image_name','$status')";
+
+                    $sql = "INSERT INTO cat_admin (title, feature, image, status) 
+            VALUES ('$title', '$feature', '$image_name', '$status')";
 
                     $result = mysqli_query($conn, $sql);
 
                     if ($result === true) {
                         $_SESSION['add'] = "<div class='success'>Category Added Successfully</div>";
-                        header("Location:manage_cat.php");
+                        header("Location: manage_cat.php");
                         exit();
                     } else {
                         $_SESSION['add'] = "<div class='error'>Failed to add Category</div>";
-                        header("Location:add_cat.php");
+                        header("Location: add_cat.php");
                         exit();
                     }
                 }
-
-
-
-
                 ?>
             </div>
 

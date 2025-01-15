@@ -27,7 +27,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
 
 $conn->close();
 
-    ?>
+?>
 
 
 
@@ -63,7 +63,7 @@ $conn->close();
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                    <li><a href="../homepage/index.php">Home</a></li>
+                        <li><a href="../homepage/index.php">Home</a></li>
                         <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
@@ -76,55 +76,55 @@ $conn->close();
     </div>
 
 
-<!-----categories----->
+    <!-----categories----->
 
-<div class="main-content">
+    <div class="main-content">
         <div class="wrapper">
-        <h1>Manage Products</h1>
-        <br /> <br /> <br />
+            <h1>Manage Products</h1>
+            <br /> <br /> <br />
 
-<!---butoon to addadminm---->
-<a href="#" class="btn-primary">Add Product</a>
-<br /> <br /> <br />
-
-
+            <!---butoon to addadminm---->
+            <a href="<?php ?>add_product.php" class="btn-primary">Add Product</a>
+            <br /> <br /> <br />
 
 
 
-<table class="tbl-full">
-    <tr>
-        <th>S.N</th>
-        <th>Username</th>
-        <th>Actions</th>
-    </tr>
-    <tr>
-        <td>1.</td>
-        <td>Arpana</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>2.</td>
-        <td>Meowwyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>3.</td>
-        <td>Puppyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
 
-</table>
+
+            <table class="tbl-full">
+                <tr>
+                    <th>S.N</th>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td>Arpana</td>
+                    <td>
+                        <a href="#" class="btn-secondary">Update Admin</a>
+                        <a href="#" class="btn-danger">Delete Admin</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Meowwyyy</td>
+                    <td>
+                        <a href="#" class="btn-secondary">Update Admin</a>
+                        <a href="#" class="btn-danger">Delete Admin</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>Puppyyy</td>
+                    <td>
+                        <a href="#" class="btn-secondary">Update Admin</a>
+                        <a href="#" class="btn-danger">Delete Admin</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
     </div>
-</div>
 
 
 

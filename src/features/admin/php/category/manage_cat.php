@@ -92,6 +92,23 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 echo $_SESSION['delete'];
                 unset($_SESSION['delete']);
             }
+            if (isset($_SESSION['no-category-found'])) {
+                echo $_SESSION['no-category-found'];
+                unset($_SESSION['no-category-found']);
+            }
+            if (isset($_SESSION['update'])) {
+                echo $_SESSION['update'];
+                unset($_SESSION['update']);
+            }
+            if(isset($_SESSION['upload'])){
+                echo $_SESSION['upload'];
+                unset($_SESSION['upload']);
+
+            }
+            if(isset($_SESSION['failed-remove'])){
+                echo $_SESSION['failed-remove'];
+                unset($_SESSION['failed-remove']);
+            }
 
 
 
@@ -147,8 +164,9 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                             </td>
                             <td><?php echo $feature; ?></td>
                             <td><?php echo $status; ?></td>
+
                             <td>
-                                <a href="./update_cat.php?id=<?php echo $id;?>" class="btn-secondary">Update Category</a>
+                                <a href="./update_cat.php?id=<?php echo $id; ?>" class="btn-secondary">Update Category</a>
                                 <a href="./delete_cat.php?id=<?php echo $id; ?>&image=<?php echo $image; ?>" class="btn-danger">Delete Category</a>
                             </td>
                         </tr>

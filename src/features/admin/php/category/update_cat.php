@@ -1,3 +1,24 @@
+<?php
+session_start();
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "admin";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,8 +69,13 @@
 
                 $count = mysqli_num_rows($result);
                 if ($count == 1) {
+                    $row = mysqli_fetch_assoc($result);
+                    $title = $row['title'];
+                    $current_image = $row['image'];
+                    $feature = $row['feature'];
+                    $status = $row['status'];
                 } else {
-                    $_SESSION['no-cat-found'] = "<div class='error'>Categort not found</div>";
+                    $_SESSION['no-category-found'] = "<div class='error'>Category not found</div>";
                     header("Location:manage_cat.php");
                     exit();
                 }
@@ -68,12 +94,24 @@
                     <div class="group">
 
                         <label for="title">Title:</label>
-                        <input type="text" id="title" name="title" placeholder="Category Title">
+                        <input type="text" id="title" name="title" value="<?php echo $title; ?>" placeholder="Category Title">
                     </div>
 
                     <div class="group">
                         <label for="current image">Current Image:</label>
-                        Image will be displayed here
+                        <?php
+                        if ($current_image != "") {
+                        ?>
+                            <img src="<?php ?>./images/<?php echo $current_image; ?>" width="100px;">
+                        <?php
+
+                        } else {
+                            echo "<div class='error'>Image not added</div>";
+                        }
+
+
+
+                        ?>
                     </div>
                     <div class="group">
                         <label for="image">New Image:</label>
@@ -81,21 +119,94 @@
                     </div>
                     <div class="group">
                         <label for="feature">Feature:</label><br>
-                        <input type="radio" name="feature" value="yes">Yes
-                        <input type="radio" name="feature" value="no">No
+                        <input <?php if ($feature == "yes") {
+                                    echo "checked";
+                                } ?> type="radio" name="feature" value="yes">Yes
+                        <input <?php if ($feature == "no") {
+                                    echo "checked";
+                                } ?> type="radio" name="feature" value="no">No
                     </div>
                     <div class="group">
                         <label for="status">Status</label>
                         <select name="status" id="status">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="active" <?php if ($status == "active") echo "selected"; ?>>Active</option>
+                            <option value="inactive" <?php if ($status == "inactive") echo "selected"; ?>>Inactive</option>
                         </select>
+                    </div>
 
-                    </div><br>
-
-                    <input type="submit" name="submit" value="Add Category" class="btn-secondary">
-
+                    <div class="group">
+                        <input type="hidden" name="current_image" value="<?php echo $current_image; ?>">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                        <input type="submit" name="submit" value="Update Category" class="btn-secondary">
+                    </div>
                 </form>
+                <?php
+                if (isset($_POST['submit'])) {
+
+                    $id = $_POST['id'];
+                    $title = $_POST['title'];
+                    $current_image = $_POST['current_image'];
+                    $feature = $_POST['feature'];
+                    $status = $_POST['status'];
+
+                    if (isset($_FILES['image']['name'])) {
+                        $image = $_FILES['image']['name'];
+                        if ($image != "") {
+                            $ext = pathinfo($image, PATHINFO_EXTENSION);
+
+                            $image_name = "Tops_" . rand(000, 999) . '.' . $ext;
+
+                            $source_path = $_FILES['image']['tmp_name'];
+                            $destination_path = "images/" . $image_name;
+
+
+                            $upload = move_uploaded_file($source_path, $destination_path);
+
+                            if ($upload == false) {
+                                $_SESSION['upload'] = "<div class='error'>Failed to upload image</div>";
+                                header("Location: manage_cat.php");
+                                exit();
+                            }
+
+                            if ($current_image !== "") {
+                                $remove_path = "images/" . $current_image;
+                                $remove = unlink($remove_path);
+                                if ($remove == false) {
+                                    $_SESSION['failed-remove'] = "<div class='error'>Failed to remove current image</div>";
+                                    header("location:manage_cat.php");
+                                    exit();
+                                }
+                            }
+                        } else {
+                            $image_name = $current_image;
+                        }
+                    } else {
+                        $image_name = $current_image;
+                    }
+
+
+                    $sql2 = "UPDATE cat_admin SET
+                        title = '$title',
+                        image = '$image_name',
+                        feature = '$feature',
+                        status = '$status'
+                        where id =$id
+                    
+                    ";
+                    $result2 = mysqli_query($conn, $sql2);
+                    if ($result2 == true) {
+
+                        $_SESSION['update'] = "<div class='success'>Category Updated Successfully</div>";
+                        header("Location:manage_cat.php");
+                        exit();
+                    } else {
+                        $_SESSION['update'] = "<div class='error'>Failed to update category</div>";
+                        header("Location:manage_cat.php");
+                        exit();
+                    }
+                }
+
+                ?>
 
 
             </div>
