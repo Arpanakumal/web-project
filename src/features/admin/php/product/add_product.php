@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 
 $servername = "localhost";
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="wrapper">
             <h1>Add Product</h1>
             <br><br>
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="small-container">
+
+            <?php
+            if (isset($_SESSION['upload'])) {
+                echo $_SESSION['upload'];
+                unset($_SESSION['upload']);
+            }
+            ?>
+            <br>
+            <div class="small-container">
+                <form action="" method="POST" enctype="multipart/form-data">
 
                     <div class="group">
 
@@ -77,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="group">
 
                         <label for="description">Description</label><br>
-                        <textarea name="desciption" cols="30" rows="5" placeholder="Description of the product"></textarea>
+                        <textarea name="description" cols="30" rows="5" placeholder="Description of the product"></textarea>
                     </div>
                     <div class="group">
 
@@ -135,57 +144,81 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="submit" name="submit" value="Add Product" class="btn-secondary">
 
 
-            </form>
+                </form>
 
-            <?php
+                <?php
 
-            if(isset($_POST['submit'])){
-                $title = $_POST['title'];
-                $description = $_POST['discription'];
-                $price = $_POST['price'];
-                $category = $_POST['category'];
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+                    $title = $_POST['title'] ?? '';
+                    $description = $_POST['description'] ?? '';
+                    $price = $_POST['price'] ?? 0;
+                    $categories_id = $_POST['category'] ?? 0;
+                    $feature = $_POST['feature'] ?? 'no';
+                    $status = $_POST['status'] ?? 'inactive';
+                    $image = "";
 
+                    $targetDir = "./images/";
+                    if (!is_dir($targetDir)) {
+                        mkdir($targetDir, 0755, true); // Create directory if not exists
+                    }
 
-                if(isset($_POST['featured'])){
-                    $feature = $_POST['feature'];
-                }else{
-                    $feature = "no";
+                    if (!empty($_FILES['image']['name'])) {
+                        $image = $_FILES['image']['name'];
+                        $ext = pathinfo($image, PATHINFO_EXTENSION);
+                        $image = "Product_Name_" . rand(0000, 9999) . "." . $ext;
+
+                        $src = $_FILES['image']['tmp_name'];
+                        $dst = $targetDir . $image;
+
+                        if (!move_uploaded_file($src, $dst)) {
+                            $_SESSION['upload'] = "<div class='error'>Failed to upload image</div>";
+                            header("Location: add_product.php");
+                            exit();
+                        }
+                    }
+
+                    $stmt = $conn->prepare("INSERT INTO products (title, description, price, image, categories_id, feature, status) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("ssdssss", $title, $description, $price, $image, $categories_id, $feature, $status);
+
+                    if ($stmt->execute()) {
+                        $_SESSION['add'] = "<div class='success'>Product Added Successfully</div>";
+                        header("Location: manage_product.php");
+                        exit();
+                    } else {
+                        $_SESSION['add'] = "<div class='error'>Failed to Add Product</div>";
+                        header("Location: add_product.php");
+                        exit();
+                    }
                 }
-                if(isset($_POST['status'])){
-
-                }else{
-                    
-                }
-
-            }
-            ?>
-        </div>
-    </div>
-
-
-
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer-col-1">
-                    <img src="../../../home/images/logo.png">
-                    <h2>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</h2>
-                </div>
-                <div class="footer-col-2">
-                    <h1>Follow Us</h1>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
-                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
-                        <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i>Pinterest</a></li>
-                    </ul>
-                </div>
-
+                ob_end_flush();
+                ?>
             </div>
-            <hr>
-            <h2 class="copyright">Copyright @ 2024-Clothing Palette</h2>
         </div>
-    </div>
+
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <img src="../../../home/images/logo.png">
+                        <h2>Clothing palette's purpose is to provide the latest vintage and soft aesthetic outfits</h2>
+                    </div>
+                    <div class="footer-col-2">
+                        <h1>Follow Us</h1>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                            <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i>Pinterest</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <hr>
+                <h2 class="copyright">Copyright @ 2024-Clothing Palette</h2>
+            </div>
+        </div>
 </body>
 
 </html>

@@ -25,7 +25,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
     }
 }
 
-$conn->close();
+
 
 ?>
 
@@ -81,7 +81,27 @@ $conn->close();
     <div class="main-content">
         <div class="wrapper">
             <h1>Manage Products</h1>
-            <br /> <br /> <br />
+            <br><br>
+            <?php
+
+            if (isset($_SESSION['add'])) {
+                echo $_SESSION['add'];
+                unset($_SESSION['add']);
+            }
+            if (isset($_SESSION['delete'])) {
+                echo $_SESSION['delete'];
+                unset($_SESSION['delete']);
+            }
+            if (isset($_SESSION['upload'])) {
+                echo $_SESSION['upload'];
+                unset($_SESSION['upload']);
+            }
+            if (isset($_SESSION['unauthorized'])) {
+                echo $_SESSION['unauthorized'];
+                unset($_SESSION['unauthorized']);
+            }
+
+            ?><br>
 
             <!---butoon to addadminm---->
             <a href="<?php ?>add_product.php" class="btn-primary">Add Product</a>
@@ -94,33 +114,61 @@ $conn->close();
             <table class="tbl-full">
                 <tr>
                     <th>S.N</th>
-                    <th>Username</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Feature</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Arpana</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>Meowwyyy</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Puppyyy</td>
-                    <td>
-                        <a href="#" class="btn-secondary">Update Admin</a>
-                        <a href="#" class="btn-danger">Delete Admin</a>
-                    </td>
-                </tr>
+
+                <?php
+                $sql = "SELECT * FROM products";
+                $result = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($result);
+                $sn = 1;
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $id = $row['id'];
+                        $title = $row['title'];
+                        $price = $row['price'];
+                        $image_name = $row['image'];
+                        $feature = $row['feature'];
+                        $status = $row['status'];
+                ?>
+                        <tr>
+                            <td><?php echo $sn++; ?></td>
+                            <td><?php echo $title; ?></td>
+                            <td>Rs.<?php echo $price; ?></td>
+                            <td>
+                                <?php
+                                if ($image_name == "") {
+                                    echo "<div class='error'>Image not added</div>";
+                                } else {
+                                ?>
+                                    <img src="images/<?php echo $image_name; ?>" width="100px" alt="Product Image">
+
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td><?php echo $feature; ?></td>
+                            <td><?php echo $status; ?></td>
+
+
+                            <td>
+                                <a href="./update_product.php?id=<?php echo $id;?>"class="btn-secondary">Update Product</a>
+                                <a href="./delete_product.php?id= <?php echo $id; ?>&image_name=<?php echo $image_name; ?>" class="btn-danger">Delete Product</a>
+                            </td>
+                        </tr>
+                <?php
+                    }
+                } else {
+                    echo "<tr><td colspan='7' class='error'>Product not added yet</td></tr>";
+                }
+                ?>
+
+
 
             </table>
         </div>
