@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+ob_start();
 
 $servername = "localhost";
 $username = "root";
@@ -30,6 +30,7 @@ if ($conn->connect_error) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../../php/admin/css/adminnn.css">
     <link rel="stylesheet" href="../../css/cat.css">
+    <link rel="stylesheet" href="./css/product.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Home page</title>
@@ -56,9 +57,185 @@ if ($conn->connect_error) {
         </div>
     </div>
 
+    <?php
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $sql2 = "SELECT * FROM products where $id =$id";
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_assoc($result2);
+        $title = $row2['title'];
+        $description = $row2['description'];
+        $price = $row2['price'];
+        $current_image = $row2['image'];
+        $current_category = $row2['categories_id'];
+        $feature = $row2['feature'];
+        $status = $row2['status'];
+    } else {
+        header("Location:manage_product.php");
+        exit();
+    }
+
+    ?>
+
+    <div class="main-content">
+        <div class="wrapper">
+            <h1>Update Product</h1>
+            <br><br><br>
+            <div class="small-container">
+                <form action="update_product.php" method="POST" enctype="multipart/form-data">
+                    <div class="group">
+
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" value="<?php echo $title; ?>" placeholder="Category Title">
+                    </div>
+
+                    <div class="group">
+                        <label for="description">Description</label>
+                        <textarea name="description" cols="30" rows="5"><?php echo $description; ?></textarea>
+                    </div>
+                    <div class="group">
+                        <label for="price">Price:</label>
+                        <input type="number" name="price" id="price" value="<?php echo $price; ?>">
+                    </div>
 
 
-    
+                    <div class="group">
+                        <label for=" current image">Current Image:</label>
+                        <?php
+                        if ($current_image == "") {
+                            echo "<div class='error'>Image not available</div>";
+                        } else {
+                        ?>
+
+                            <img src="./images/<?php echo $current_image; ?>" width="100px;">
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="group">
+                        <label for="new image">Select new image:</label>
+                        <input type="file" name="image">
+                    </div>
+
+                    <div class="group">
+                        <label for="category">Category:</label>
+                        <select name="category" id="category">
+                            <?php
+                            $sql = "SELECT  * from cat_admin where status='active'";
+                            $result = mysqli_query($conn, $sql);
+                            $count = mysqli_num_rows($result);
+                            if ($count > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $category_title = $row['title'];
+                                    $category_id = $row['id'];
+
+                            ?>
+                                    <option value="<?php echo $category_id; ?>" <?php if ($current_category == $category_id) {
+                                                                                    echo "selected";
+                                                                                } ?>><?php echo $category_title; ?></option>
+
+                            <?php
+                                }
+                            } else {
+                                echo "<option value='0'>Category Not Available</option>";
+                            }
+
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <label for="feature">Feature:</label><br>
+                        <input <?php if ($feature == "yes") {
+                                    echo "checked";
+                                } ?> type="radio" name="feature" value="yes">Yes
+                        <input <?php if ($feature == "no") {
+                                    echo "checked";
+                                } ?> type="radio" name="feature" value="no">No
+                    </div>
+                    <div class="group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status">
+                            <option value="active" <?php if ($status == "active") echo "selected"; ?>>Active</option>
+                            <option value="inactive" <?php if ($status == "inactive") echo "selected"; ?>>Inactive</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <input type="hidden" name="current_image" value="<?php echo $current_image; ?>">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                        <input type="submit" name="submit" value="Update Product" class="btn-secondary">
+                    </div>
+                </form>
+
+                <?php
+                if (isset($_POST['submit'])) {
+                    $id = $_POST['id'];
+                    $title = $_POST['title'];
+                    $description = $_POST['description'];
+                    $price = $_POST['price'];
+                    $current_image = $_POST['current_image'];
+                    $category = $_POST['category'];
+                    $feature = $_POST['feature'];
+                    $status = $_POST['status'];
+
+                    if (isset($_FILES['image']['name'])) {
+                        $image_name = $_FILES['image']['name'];
+                        if ($image_name != "") {
+                            $ext = pathinfo($image_name, PATHINFO_EXTENSION);
+
+                            $image_name = "Product Name_" . rand(000, 999) . '.' . $ext;
+
+                            $source_path = $_FILES['image']['tmp_name'];
+                            $destination_path = "images/" . $image_name;
+
+
+                            $upload = move_uploaded_file($source_path, $destination_path);
+
+                            if ($upload == false) {
+                                $_SESSION['upload'] = "<div class='error'>Failed to upload image</div>";
+                                header("Location: manage_product.php");
+                                exit();
+                            }
+                            if ($current_image !== "") {
+                                $remove_path = "images/" . $current_image;
+                                $remove = unlink($remove_path);
+                                if ($remove == false) {
+                                    $_SESSION['failed-remove'] = "<div class='error'>Failed to remove current image</div>";
+                                    header("location:manage_product.php");
+                                    exit();
+                                }
+                            }
+                        }
+                    } else {
+                        $image_name = $current_image;
+                    }
+                    $sql3 = " UPDATE products set
+                    title= '$title',
+                    description= '$description',
+                    price= $price,
+                    image= '$image_name',
+                    feature= '$feature',
+                    status= '$status'
+                    where id = '$id'";
+
+                    $result3 = mysqli_query($conn, $sql3);
+                    if ($result == true) {
+                        $_SESSION['update'] = "<div class='success'>Product updated successfully</div>";
+                        header("Location:manage_product.php");
+                        exit();
+                    } else {
+                        $_SESSION['update'] = "<div class='error'>Failed to update product</div>";
+                        header("Location:manage_product.php");
+                        exit();
+                    }
+                }
+
+                ob_end_flush();
+                ?>
+            </div>
+        </div>
+    </div>
 
 
     <div class="footer">

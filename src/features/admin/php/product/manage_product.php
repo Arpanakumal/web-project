@@ -100,11 +100,19 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 echo $_SESSION['unauthorized'];
                 unset($_SESSION['unauthorized']);
             }
+            if (isset($_SESSION['failed-remove'])) {
+                echo $_SESSION['failed-remove'];
+                unset($_SESSION['failed-remove']);
+            }
+            if (isset($_SESSION['update'])) {
+                echo $_SESSION['update'];
+                unset($_SESSION['update']);
+            }
 
             ?><br>
 
             <!---butoon to addadminm---->
-            <a href="<?php ?>add_product.php" class="btn-primary">Add Product</a>
+            <a href="add_product.php" class="btn-primary">Add Product</a>
             <br /> <br /> <br />
 
 
@@ -146,7 +154,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                                     echo "<div class='error'>Image not added</div>";
                                 } else {
                                 ?>
-                                    <img src="images/<?php echo $image_name; ?>" width="100px" alt="Product Image">
+                                    <img src="./images/<?php echo $image_name; ?>" width="100px" alt="Product Image">
 
                                 <?php
                                 }
@@ -157,7 +165,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
 
 
                             <td>
-                                <a href="./update_product.php?id=<?php echo $id;?>"class="btn-secondary">Update Product</a>
+                                <a href="./update_product.php?id=<?php echo $id; ?>" class="btn-secondary">Update Product</a>
                                 <a href="./delete_product.php?id= <?php echo $id; ?>&image_name=<?php echo $image_name; ?>" class="btn-danger">Delete Product</a>
                             </td>
                         </tr>
@@ -166,6 +174,8 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 } else {
                     echo "<tr><td colspan='7' class='error'>Product not added yet</td></tr>";
                 }
+                $conn->close();
+
                 ?>
 
 
