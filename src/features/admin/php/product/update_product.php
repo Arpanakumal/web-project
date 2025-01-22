@@ -1,6 +1,7 @@
 <?php
-session_start();
 ob_start();
+session_start();
+
 
 $servername = "localhost";
 $username = "root";
@@ -60,7 +61,7 @@ if ($conn->connect_error) {
     <?php
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $sql2 = "SELECT * FROM products where $id =$id";
+        $sql2 = "SELECT * FROM products where id =$id";
         $result2 = mysqli_query($conn, $sql2);
         $row2 = mysqli_fetch_assoc($result2);
         $title = $row2['title'];
@@ -184,7 +185,7 @@ if ($conn->connect_error) {
                         if ($image_name != "") {
                             $ext = pathinfo($image_name, PATHINFO_EXTENSION);
 
-                            $image_name = "Product Name_" . rand(000, 999) . '.' . $ext;
+                            $image_name = "Product Name-" . rand(000, 999) . '.' . $ext;
 
                             $source_path = $_FILES['image']['tmp_name'];
                             $destination_path = "images/" . $image_name;
@@ -201,7 +202,7 @@ if ($conn->connect_error) {
                                 $remove_path = "images/" . $current_image;
                                 $remove = unlink($remove_path);
                                 if ($remove == false) {
-                                    $_SESSION['failed-remove'] = "<div class='error'>Failed to remove current image</div>";
+                                    $_SESSION['remove-failed'] = "<div class='error'>Failed to remove current image</div>";
                                     header("location:manage_product.php");
                                     exit();
                                 }
@@ -214,19 +215,20 @@ if ($conn->connect_error) {
                     title= '$title',
                     description= '$description',
                     price= $price,
+                    categories_id='$category',
                     image= '$image_name',
                     feature= '$feature',
                     status= '$status'
                     where id = '$id'";
 
                     $result3 = mysqli_query($conn, $sql3);
-                    if ($result == true) {
+                    if ($result3) {
                         $_SESSION['update'] = "<div class='success'>Product updated successfully</div>";
-                        header("Location:manage_product.php");
+                        header("Location: manage_product.php");
                         exit();
                     } else {
-                        $_SESSION['update'] = "<div class='error'>Failed to update product</div>";
-                        header("Location:manage_product.php");
+                        $_SESSION['update'] = "<div class='error'>Failed to update product: " . mysqli_error($conn) . "</div>";
+                        header("Location: manage_product.php");
                         exit();
                     }
                 }

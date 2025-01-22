@@ -100,9 +100,9 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 echo $_SESSION['unauthorized'];
                 unset($_SESSION['unauthorized']);
             }
-            if (isset($_SESSION['failed-remove'])) {
-                echo $_SESSION['failed-remove'];
-                unset($_SESSION['failed-remove']);
+            if (isset($_SESSION['remove-failed'])) {
+                echo $_SESSION['remove-failed'];
+                unset($_SESSION['remove-failed']);
             }
             if (isset($_SESSION['update'])) {
                 echo $_SESSION['update'];

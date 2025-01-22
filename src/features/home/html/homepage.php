@@ -1,14 +1,15 @@
 <!-- <?php
         // Start session
-        session_start();
 
+
+        include('../../partials/partials.php');
         // Check if the user is logged in
-        if (!isset($_SESSION['admin'])) {
-            // If not logged in, redirect to the login page
-            header("Location: ../../account/php/login/login.php");
-            header("location:../../account/php/register/register.php");
-            exit();
-        }
+        // if (!isset($_SESSION['admin'])) {
+        //     // If not logged in, redirect to the login page
+        //     header("Location: ../../account/php/login/login.php");
+        //     header("location:../../account/php/register/register.php");
+        //     exit();
+        // }
 
         ?> -->
 <!DOCTYPE html>
@@ -36,8 +37,8 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="../html/homepage.html">Home</a></li>
-                        <li><a href="../../../features/product/html/product11.html">Products</a></li>
+                        <li><a href="../html/homepage.php">Home</a></li>
+                        <li><a href="../../../features/product/html/product.php">Products</a></li>
                         <li><a href="../../../features/about/html/about.html">About Us</a></li>
                         <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
                         <li><a href="../../../features/account/php/register/register.html">Account</a></li>
@@ -75,20 +76,47 @@
     <div class="Categories">
         <div class="small-container">
             <h2 class="Title">Shop By Category</h2>
-            <div class="row">
-                <div class="col-3">
-                    <img src="../images/cat1.jpg">
-                    <h4>Dresses</h4>
-                </div>
-                <div class="col-3">
+            <?php
+            $sql = "SELECT * from cat_admin where status='active' LIMIT 3 ";
+            $result = mysqli_query($conn, $sql);
+            $count = mysqli_num_rows($result);
+            if ($count > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $id = $row['id'];
+                    $title = $row['title'];
+                    $image_name = $row['image'];
+            ?>
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="../../category/html/category.php"></a>
+                            <?php
+                            if ($image_name == "") {
+                                echo "<div class='error'>Image not available</div>";
+                            } else {
+                            ?>
+                                <img src="../../admin/php/category/images/<?php echo $image_name; ?>">
+                            <?php
+                            }
+                            ?>
+
+                            <h4><?php echo $title; ?></h4>
+                        </div>
+                <?php
+                }
+            } else {
+                echo "<div class='error'>Category not added</div>";
+            }
+                ?>
+
+                <!-- <div class="col-3">
                     <img src="../images/cat2.jpeg">
                     <h4>Sweaters</h4>
-                </div>
-                <div class="col-3">
+                </div> -->
+                <!-- <div class="col-3">
                     <img src="../../../features/product/images/product7.jpeg">
                     <h4>Tops</h4>
-                </div>
-            </div>
+                </div> -->
+                
         </div>
     </div>
 
