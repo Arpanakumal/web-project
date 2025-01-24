@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Account page</title>
     <style>
-        .group {
+    .group {
     position: relative;
     margin-bottom: 15px;
-    }
+}
 
 .group i {
     position: absolute;
@@ -23,7 +23,9 @@
 }
 
 .group input {
-    padding-left: 30px;
+    width: 100%;
+    padding: 10px 10px 10px 30px; /* Adjust padding to prevent overlap */
+    box-sizing: border-box;
 }
 
 #eye {
@@ -33,6 +35,8 @@
     transform: translateY(-50%);
     cursor: pointer;
 }
+
+
 
     </style>
 </head>
@@ -60,40 +64,39 @@
 
             <!-------register form-->
             <div class="small-container">
-                <h2>Register</h2>
+                <h2>Register</h2><br>
                 <form action="register.php" method="POST" onsubmit="validateForm(event)">
                     <div class="group">
                         <i class="fa fa-user" aria-hidden="true"></i>
-                        <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter Username">
-                    </div>
+                    </div><br>
                     <div class="group">
                         <i class="fa fa-envelope" aria-hidden="true"></i>
-                        <label for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="Enter Email">
-                    </div>
+                    </div><br>
                     <div class="group">
-                        
-                        <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter password">
                         <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
-                    </div>
+                    </div><br>
                     <p id="validationError" style="color: red;"></p>
-                    <input type="submit" id="btn" value="Register">
+                    <input type="submit" id="btn" value="Register"><br>
+                    
                     <div class="class-links">
                         <p>Already have an account?</p>
                         <a href="../login/login.html" id="btn" style="text-decoration: none;">
                             <br>Login</a>
                     </div>
-                
                 </form>
+                
             </div>
 
         
         </div>
     </div>
 </body>
-<script src="../../../../common/js/index.js"></script>
+<script src="../../../../common/js/index.js">
+    
+</script>
 <script src="../../js/script.js"></script>
 
 </html>

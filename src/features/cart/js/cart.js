@@ -143,16 +143,40 @@ function updateQuantity(id, newQuantity) {
 
 // Add item to cart (example usage)
 function addToCart(id, name, price, image) {
+    // Debugging: check if the function is triggered
+    console.log('Adding to cart:', {
+        id,
+        name,
+        price,
+        image
+    });
+
+    // Get existing cart from localStorage, or initialize it if not exists
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existingItemIndex = cart.findIndex(item => item.id === id);
-    if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity += 1; // Increase quantity if item already exists
+
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.findIndex(item => item.id === id);
+    if (existingProductIndex !== -1) {
+        // If product is already in the cart, increase quantity
+        cart[existingProductIndex].quantity += 1;
     } else {
-        cart.push({ id, name, price, image, quantity: 1 });
+        // If product is not in the cart, add a new product entry
+        cart.push({
+            id,
+            name,
+            price,
+            image,
+            quantity: 1
+        });
     }
+
+    // Save the updated cart back to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart(); // Refresh cart view
+
+    // Optionally, update the cart icon or display a message
+    alert('Item added to cart');
 }
+
 
 
 // Assuming loadProducts is called to get products from product.json
@@ -179,3 +203,26 @@ async function loadProducts() {
         console.error('Error loading products:', error);
     }
 }
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Check if 'add_product' parameter exists in the URL
+    var productId = getUrlParameter('add_product');
+    if (productId) {
+        // Function to add product to cart
+        function addProductToCart(productId) {
+            // Implement your logic to add the product to the cart
+            // This might involve making an AJAX request to the server
+            console.log('Product added to cart: ' + productId);
+        }
+
+        // Add the product to the cart
+        addProductToCart(productId);
+    }
+});

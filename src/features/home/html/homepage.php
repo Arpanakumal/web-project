@@ -76,49 +76,40 @@
     <div class="Categories">
         <div class="small-container">
             <h2 class="Title">Shop By Category</h2>
-            <?php
-            $sql = "SELECT * from cat_admin where status='active' LIMIT 3 ";
-            $result = mysqli_query($conn, $sql);
-            $count = mysqli_num_rows($result);
-            if ($count > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $id = $row['id'];
-                    $title = $row['title'];
-                    $image_name = $row['image'];
-            ?>
-                    <div class="row">
-                        <div class="col-3">
+            <div class="category-row">
+                <?php
+                $sql = "SELECT * from cat_admin where status='active' LIMIT 3";
+                $result = mysqli_query($conn, $sql);
+                $count = mysqli_num_rows($result);
+                if ($count > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $id = $row['id'];
+                        $title = $row['title'];
+                        $image_name = $row['image'];
+                ?>
+                        <div class="category-item">
                             <a href="../../category/html/category.php"></a>
                             <?php
                             if ($image_name == "") {
                                 echo "<div class='error'>Image not available</div>";
                             } else {
                             ?>
-                                <img src="../../admin/php/category/images/<?php echo $image_name; ?>">
+                                <img src="../../admin/php/category/images/<?php echo $image_name; ?>" alt="<?php echo $title; ?>">
                             <?php
                             }
                             ?>
-
                             <h4><?php echo $title; ?></h4>
                         </div>
                 <?php
+                    }
+                } else {
+                    echo "<div class='error'>Category not added</div>";
                 }
-            } else {
-                echo "<div class='error'>Category not added</div>";
-            }
                 ?>
-
-                <!-- <div class="col-3">
-                    <img src="../images/cat2.jpeg">
-                    <h4>Sweaters</h4>
-                </div> -->
-                <!-- <div class="col-3">
-                    <img src="../../../features/product/images/product7.jpeg">
-                    <h4>Tops</h4>
-                </div> -->
-                
+            </div>
         </div>
     </div>
+
 
     <div class="featured-products">
         <div class="small-container">
@@ -177,7 +168,7 @@
 
                     <small>The Casual Sweater is a perfect need for casual wears this winter<br></small>
 
-                    <a href="../../product/html/product.html" class="btn">Buy Now&#8594;</a>
+                    <a href="../../product/html/product.php" class="btn">Buy Now&#8594;</a>
                 </div>
             </div>
         </div>

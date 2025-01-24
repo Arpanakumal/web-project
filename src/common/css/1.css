@@ -136,6 +136,50 @@ p {
 
 }
 
+.category-row {
+    display: flex;
+    /* Flexbox for horizontal layout */
+    gap: 20px;
+    /* Add spacing between items */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Align vertically */
+    flex-wrap: nowrap;
+    /* Prevent wrapping */
+    overflow-x: auto;
+    /* Enable horizontal scrolling if needed */
+    padding: 20px 0;
+}
+
+.category-item {
+    flex: 0 0 auto;
+    /* Prevent resizing */
+    text-align: center;
+    /* Center the text */
+    width: 200px;
+    /* Fixed width for each item */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    /* Optional background color */
+}
+
+.category-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    /* Rounded corners for images */
+}
+
+.category-item h4 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+
 
 .col-3 {
     flex-basis: 30%;

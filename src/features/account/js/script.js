@@ -2,7 +2,7 @@ function validateForm(event) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordPattern = /[a-zA-Z0-9.]/;
     let valid = true;
 
     if (!emailPattern.test(email)) {
@@ -10,7 +10,7 @@ function validateForm(event) {
         valid = false;
     } else if (!passwordPattern.test(password)) {
         document.getElementById('validationError').textContent =
-            'Password must be at least 8 characters long and include at least one letter and one number';
+            'Password must at least 6 characters long and inlcude atleast one letter and number.';
         valid = false;
     } else {
         document.getElementById('validationError').textContent = '';
@@ -20,7 +20,7 @@ function validateForm(event) {
         event.preventDefault();
     }
 }
-
+document.getElementById('referrer').value = document.referrer;
 
 document.addEventListener('DOMContentLoaded', () => {
     const eyeIcon = document.getElementById('eye');

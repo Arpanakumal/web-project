@@ -59,11 +59,22 @@ if ($conn->connect_error) {
     </div>
 
     <?php
+
+    //check whethet the id is set or not
     if (isset($_GET['id'])) {
+        //get the id
         $id = $_GET['id'];
-        $sql2 = "SELECT * FROM products where id =$id";
-        $result2 = mysqli_query($conn, $sql2);
-        $row2 = mysqli_fetch_assoc($result2);
+
+        //query to get the data from the database
+        $sql2 = "SELECT * FROM products WHERE id=$id";
+
+        //execute the query
+        $res2 = mysqli_query($conn, $sql2);
+
+        //fetch the data
+        $row2 = mysqli_fetch_assoc($res2);
+
+        //get individual product
         $title = $row2['title'];
         $description = $row2['description'];
         $price = $row2['price'];
@@ -72,8 +83,8 @@ if ($conn->connect_error) {
         $feature = $row2['feature'];
         $status = $row2['status'];
     } else {
-        header("Location:manage_product.php");
-        exit();
+        //redirect to the products page
+        header('location:manage_product.php');
     }
 
     ?>
@@ -131,9 +142,9 @@ if ($conn->connect_error) {
                                     $category_id = $row['id'];
 
                             ?>
-                                    <option value="<?php echo $category_id; ?>" <?php if ($current_category == $category_id) {
-                                                                                    echo "selected";
-                                                                                } ?>><?php echo $category_title; ?></option>
+                                    <option <?php if ($current_category == $category_id) {
+                                                echo "selected";
+                                            } ?> value="<?php echo $category_id; ?>"><?php echo $category_title; ?></option>
 
                             <?php
                                 }
@@ -183,28 +194,38 @@ if ($conn->connect_error) {
                     if (isset($_FILES['image']['name'])) {
                         $image_name = $_FILES['image']['name'];
                         if ($image_name != "") {
-                            $ext = pathinfo($image_name, PATHINFO_EXTENSION);
+                            $ext = end(explode('.', $image_name));
 
-                            $image_name = "Product Name-" . rand(000, 999) . '.' . $ext;
+                            //b. rename the image
+                            $image_name = "product_" . rand(0000, 9999) . '.' . $ext;
 
-                            $source_path = $_FILES['image']['tmp_name'];
-                            $destination_path = "images/" . $image_name;
+                            $src_path = $_FILES['image']['tmp_name'];
+                            $dest_path = "images/" . $image_name;
 
+                            //upload the image
+                            $upload = move_uploaded_file($src_path, $dest_path);
 
-                            $upload = move_uploaded_file($source_path, $destination_path);
-
+                            //check whether the image is upload or not
                             if ($upload == false) {
-                                $_SESSION['upload'] = "<div class='error'>Failed to upload image</div>";
-                                header("Location: manage_product.php");
-                                exit();
+                                //set message
+                                $_SESSION['upload'] = "<div class='error'>Failed to upload image.</div>";
+                                //redirect to the update page
+                                header('location:manage_product.php');
+                                die();
                             }
-                            if ($current_image !== "") {
-                                $remove_path = "images/" . $current_image;
+                            if ($current_image != "") {
+                                //remove the current image
+                                $remove_path = "../images/products/" . $current_image;
                                 $remove = unlink($remove_path);
+
+                                //check whether the image is removed or not
                                 if ($remove == false) {
-                                    $_SESSION['remove-failed'] = "<div class='error'>Failed to remove current image</div>";
-                                    header("location:manage_product.php");
-                                    exit();
+                                    //failed to remove the image
+                                    //set message
+                                    $_SESSION['remove-failed'] = "<div class='error'>Failed to remove current image.</div>";
+                                    //redirect to the update page
+                                    header('location:manage_product.php');
+                                    die();
                                 }
                             }
                         }
@@ -219,7 +240,7 @@ if ($conn->connect_error) {
                     image= '$image_name',
                     feature= '$feature',
                     status= '$status'
-                    where id = '$id'";
+                    where id = $id";
 
                     $result3 = mysqli_query($conn, $sql3);
                     if ($result3) {

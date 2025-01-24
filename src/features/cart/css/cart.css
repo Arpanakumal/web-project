@@ -22,19 +22,23 @@ table {
 }
 
 /* Style for table headers */
+/* Style for table headers */
 th {
-    background-color: #7a06df;
-    /* Light background color */
-    color: #333;
-    /* Dark text color for contrast */
+    background-color: rgb(109, 13, 139);
+    /* Same background color as the checkout button */
+    color: white;
+    /* White text color for contrast */
     padding: 12px;
     text-align: left;
-    /* Align text to the left */
     font-weight: bold;
-    /* Make header text bold */
-    border: 1px solid #ddd;
-    /* Border for header cells */
+
+    border-radius: 4px;
+
+    text-transform: uppercase;
+
 }
+
+
 
 /* Style for table cells (td) */
 td {
@@ -95,6 +99,7 @@ tbody tr:nth-child(even) {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
 }
 
 /* Add proper padding and margins around each product row */

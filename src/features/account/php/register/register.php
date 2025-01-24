@@ -1,5 +1,15 @@
 <?php
 
+// Assuming you have processed the registration data and created the user account
+
+// Product ID or SKU to add to the cart
+$product_id = '12345';
+
+// Redirect to the cart page with product ID as a query parameter
+header('Location: ../../cart/html/cart.html?add_product=' . $product_id);
+exit();
+
+
 
 var_dump($_POST);
 
@@ -58,6 +68,16 @@ if ($conn->query($sql) === TRUE) {
   header("Location: login.php?error=Invalid email or password");
   exit;
   echo "Error: " . $conn->error;
+}
+
+if (isset($_POST['referrer']) && !empty($_POST['referrer'])) {
+  $referrer = $_POST['referrer'];
+  header("Location: $referrer");
+  exit();
+} else {
+  // Default redirect if no referrer is set
+  header("Location: default_page.php");
+  exit();
 }
 
 $conn->close();
