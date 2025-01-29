@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-    Width: 900px;
+    width: 900px;
     max-width: 90vw;
     margin: auto;
     text-align: center;
@@ -219,6 +219,7 @@ body .showCart .container {
 .listCart::-webkit-scrollbar {
     width: 0;
 }
+
 
 @media screen and (max-width:600px) {
     .listproduct {

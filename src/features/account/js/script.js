@@ -1,42 +1,56 @@
 function validateForm(event) {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const validationError = document.getElementById('validationError');
+
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    const passwordPattern = /[a-zA-Z0-9.]/;
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
     let valid = true;
 
+    console.log('Email:', email);
+    console.log('Password:', password);
+
     if (!emailPattern.test(email)) {
-        document.getElementById('validationError').textContent = 'Invalid email format';
+        console.log('Invalid email format');
+        validationError.textContent = 'Invalid email format.';
         valid = false;
     } else if (!passwordPattern.test(password)) {
-        document.getElementById('validationError').textContent =
-            'Password must at least 6 characters long and inlcude atleast one letter and number.';
+        console.log('Invalid password format');
+        validationError.textContent = 'Password must be at least 6 characters long and include one letter and one number.';
         valid = false;
     } else {
-        document.getElementById('validationError').textContent = '';
+        validationError.textContent = '';
     }
 
     if (!valid) {
+        console.log('Form validation failed');
         event.preventDefault();
+    } else {
+        console.log('Form validation passed');
     }
 }
-document.getElementById('referrer').value = document.referrer;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const eyeIcon = document.getElementById('eye');
-    const passwordField = document.getElementById('password');
+// Function to add item to cart from query parameters
+function handleAddToCartAfterLogin() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const name = urlParams.get('name');
+    const price = urlParams.get('price');
+    const image = urlParams.get('image');
 
-    if (eyeIcon && passwordField) {
-        eyeIcon.addEventListener('click', () => {
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordField.type = "password";
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            }
-        });
+    if (id && name && price && image) {
+        // Add the product to the cart
+        addToCart(parseInt(id), name, parseFloat(price), image);
+
+        // Clear query parameters to prevent re-adding the product
+        window.history.replaceState(null, null, window.location.pathname);
+
+        // Redirect to the cart page
+        window.location.href = "../../cart/html/cart.php";
     }
-});
+}
+
+// Call the function when the page loads
+handleAddToCartAfterLogin();
+

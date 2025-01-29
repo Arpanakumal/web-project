@@ -1,13 +1,14 @@
 <!-- <?php
-        // Start session
-
-
+        session_start();
         include('../../partials/partials.php');
-        // Check if the user is logged in
-        // if (!isset($_SESSION['admin'])) {
-        //     // If not logged in, redirect to the login page
-        //     header("Location: ../../account/php/login/login.php");
-        //     header("location:../../account/php/register/register.php");
+        // if ($res && $res->num_rows == 1) {
+        //     $_SESSION['login'] = "<div class='success'>Login Successful</div>";
+        //     $_SESSION['user'] = $username;
+        //     header("Location:homepage.php");
+        //     exit();
+        // } else {
+        //     $_SESSION['login'] = "<div class='error'>Invalid Username or Password</div>";
+        //     header("Location: ../../../features/account/php/login/login1.php");
         //     exit();
         // }
 
@@ -41,16 +42,32 @@
                         <li><a href="../../../features/product/html/product.php">Products</a></li>
                         <li><a href="../../../features/about/html/about.html">About Us</a></li>
                         <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
-                        <li><a href="../../../features/account/php/register/register.html">Account</a></li>
+                        <a href="../../account/php/register/register1.php"><i class="fa fa-fw fa-user"></i></a>
+                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                        <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
 
                     </ul>
-                    <a href="../../../features/cart/html/cart.html">
+                    <!-- <a href="../../../features/cart/html/cart.html">
                         <img src="../../../common/images/cart.webp" width="30px" height="30px">
-                    </a>
+                    </a> -->
 
                     <img src="../images/menu.jpeg" class="menu-icon" onclick="menutoggle()">
                 </nav>
+                <div class="input-wrapper">
+                    <form action="./search.php" method="POST">
 
+                        <input type="search" name="search" placeholder="Search Product">
+
+                        <input type="submit" name="submit" value="Search" class="btn btn-primary">
+
+
+                    </form>
+                    <!-- <a href="../html/search.php"></a>
+                    <input type="search" name="search" placeholder="Search Product" class="search-field">
+                    <button class="search-submit" aria-label="search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button> -->
+                </div>
 
 
 
@@ -59,7 +76,7 @@
                 <div class="col-2">
                     <h1>Color your Wardrobe</h1>
                     <p>Fill your Wardrobe with any colour you want.<br>Check out for new and fresh arrivals</p>
-                    <a href="../../product/html/product.html" class="btn">Shop Now </a>
+                    <a href="../../product/html/product.php" class="btn">Shop Now </a>
                 </div>
                 <div class="col-2">
                     <div class="img">
@@ -84,21 +101,21 @@
                 if ($count > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $id = $row['id'];
-                        $title = $row['title'];
+                        $category_title = $row['title'];
                         $image_name = $row['image'];
                 ?>
                         <div class="category-item">
-                            <a href="../../category/html/category.php"></a>
-                            <?php
-                            if ($image_name == "") {
-                                echo "<div class='error'>Image not available</div>";
-                            } else {
-                            ?>
-                                <img src="../../admin/php/category/images/<?php echo $image_name; ?>" alt="<?php echo $title; ?>">
-                            <?php
-                            }
-                            ?>
-                            <h4><?php echo $title; ?></h4>
+                            <a href="./product_cat.php?id=<?php echo $id; ?>">
+                                <?php
+                                if ($image_name == "") {
+                                    echo "<div class='error'>Image not available</div>";
+                                } else {
+                                ?>
+                                    <img src="../../admin/php/category/images/<?php echo $image_name; ?>" alt="<?php echo $title; ?>"></a>
+                        <?php
+                                }
+                        ?>
+                        <h4><?php echo $category_title; ?></h4>
                         </div>
                 <?php
                     }
@@ -114,37 +131,26 @@
     <div class="featured-products">
         <div class="small-container">
             <h2 class="Title">Latest products</h2>
-            <div class="row">
-                <div class="col-4">
+            <div class="category-row">
+                <div class="category-item">
+                    <a href="../../product/html/productdetail.html">
+                        <img src="../../../features/product/images/product5.jpg">
+                    </a>
+
+                    <h3>Sweet Lace cardigan sweater</h3>
+
+                </div>
+                <div class="category-item">
                     <img src="../../../features/product/images/product6.jpg">
-                    <h4>Gothic Babydoll Dress</h4>
-                    <span>&#9733;</span>
-                    <span>&#9733;</span>
-                    <span>&#9733;</span>
-                    <span>&#9733;</span>
-                    <span>&#9733;</span>
-                    <p>Rs.2500</p>
+                    <h3>Gothic Babydoll Dress</h3>
+
                 </div>
-                <div class="col-4">
+                <div class="category-item">
                     <img src="../../../features/product/images/procduct9jpg.jpg">
-                    <h4>Lace over pleated skirt</h4>
-                    <span>&#9733;</span>
-                    <span>&#9733;</span>
-                    <span>&#9734;</span>
-                    <span>&#9734;</span>
-                    <span>&#9734;</span>
-                    <p>Rs.2000</p>
+                    <h3>Lace over pleated skirt</h3>
+
                 </div>
-                <div class="col-4">
-                    <img src="../../../features/product/images/product5.jpg">
-                    <h4>Sweet Lace cardigan sweater</h4>
-                    <span>&#9733;</span>
-                    <span>&#9734;</span>
-                    <span>&#9734;</span>
-                    <span>&#9734;</span>
-                    <span>&#9734;</span>
-                    <p>Rs.2800</p>
-                </div>
+
             </div>
         </div>
     </div>
@@ -207,7 +213,9 @@
 
 
     <!------js for  toggle menu-->
-    <script src="../../../common/js/index.js"></script>
+    <script src="../../../common/js/index.js">
+
+    </script>
 
 
 </body>

@@ -56,6 +56,7 @@ if ($conn->connect_error) {
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
                         <li><a href="../../php/order/manage_order.php">Order</a></li>
+                        <li><a href="../../php/messages/message.php">Message</a></li>
                         <li><a href="../admin/logout/logout.php">Logout</a></li>
                     </ul>
                 </nav>

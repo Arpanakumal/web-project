@@ -1,21 +1,75 @@
-.items img {
-    background-color: #f8f8f8;
-    /* Light gray background */
-    border: 1px solid #ddd;
-    /* Optional border */
-    padding: 10px;
-    /* Optional padding */
-    border-radius: 5px;
-    /* Optional rounded corners */
-    width: 100%;
-    /* Ensure consistent sizing */
-    height: auto;
-    /* Maintain aspect ratio */
-    display: block;
-    object-fit: cover;
-    /* Crop or fit the image nicely */
+h2 {
+    text-align: center;
+    color: #6c1387;
 }
 
-.add-to-cart {
-    color: purple;
+h3 {
+    text-align: center;
+    color: #6c1387;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.col-4 {
+    flex: 1 1 calc(25% - 20px);
+    /* Each column takes 25% of the row, minus the gap */
+    max-width: calc(25% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.col-4 img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    /* Ensures the image covers its container without distortion */
+    border-radius: 8px;
+    /* Optional: Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional: Adds a subtle shadow */
+}
+
+.col-4 h4 {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.col-4 p {
+    font-size: 1rem;
+    color: #777;
+    margin: 5px 0;
+}
+
+.col-4 button {
+    background-color: #6c1387;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.col-4 button:hover {
+    background-color: #e7b7fc;
+}
+
+
+@media screen and (max-width:600px) {
+    .listproduct {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

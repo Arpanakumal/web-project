@@ -1,7 +1,7 @@
 .small-container {
 
     background: #e790f3;
-    height: 480px;
+    height: 460px;
     padding: 1.5rem;
     margin: 50px auto;
     border-radius: 10px;
@@ -14,6 +14,7 @@
 
 }
 
+
 body {
     font-family: sans-serif;
 }
@@ -22,6 +23,8 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="tel"],
+
+
 
 
 select {

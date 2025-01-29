@@ -1,12 +1,9 @@
 <?php
 
+session_start();
 
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', 'error.log');
-error_reporting(E_ALL);
 
-// Database credentials
+// Database credentials 
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,49 +14,40 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 
 if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-if (isset($_SERVER["REQUEST_METHOD"]) === "POST") {
-    $email = $_POST["email"] ?? null;
-    $password = $_POST["password"] ?? null;
+    $sql = "SELECT * FROM users WHERE password='$password' AND username='$username'";
+    $result = mysqli_query($conn, $sql);
 
-    if (!$email || !$password) {
-        header("Location: login.html?error=Please fill out all fields");
-        exit();
-    }
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
 
-    // Prepared statement to prevent SQL injection
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        $_SESSION['user_name'] = $row['name'];
+        $_SESSION['user_email'] = $row['email'];
+        $_SESSION['user_id'] = $row['id'];
 
-    if ($result->num_rows == 0) {
-        header("Location: login.html?error=Invalid email or password");
-        exit();
-    } else {
-        $row = $result->fetch_assoc();
-        $storedPassword = $row["password"];
-
-        // Verify hashed password
-        if (password_verify($password, $storedPassword)) {
-            // Redirect after successful login
-            header("Location:../../home/homepage.php");
-
-            echo "login successful";
-            exit();
-        } else {
-            header("Location: login.html?error=Invalid email or password");
+        // ✅ If the user came from add_to_cart.php, redirect there first
+        if (isset($_GET['id'])) {
+            header("Location: ../../cart/html/add_to_cart.php?product_id=" . $_GET['id']);
             exit();
         }
+
+        if ($row['user_type'] == 'admin') {
+            header("Location: ../../../admin/php/homepage/index.php");
+            exit();
+        } else {
+            header("Location: ../../../home/html/homepage.php");
+            exit();
+        }
+    } else {
+        echo "<script>alert('Invalid email or password');</script>";
     }
-} else {
-    header("Location: login.html?error=Invalid request");
-    exit();
 }
 
-// Close connection
+
 $conn->close();

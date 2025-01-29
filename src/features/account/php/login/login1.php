@@ -4,37 +4,39 @@
 <head>
 
     <link rel="stylesheet" href="../../../../common/css/1.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../../css/login.css">
+    <link rel="stylesheet" href="../../../admin/css/cat.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Login</title>
     <style>
         .group {
-    position: relative;
-    margin-bottom: 15px;
-    }
+            position: relative;
+            margin-bottom: 15px;
+        }
 
-.group i {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-}
+        .group i {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+        }
 
-.group input {
-    padding-left: 30px;
-}
+        .group input {
+            padding-left: 30px;
+        }
 
-#eye {
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
+        #eye {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 
 
@@ -51,10 +53,10 @@
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                        <li><a href="../../../home/html/homepage.html">Home</a></li>
-                        <li><a href="../../../../features/product/html/product.html">Products</a></li>
-                        <li><a href="../../../../features/about/html/about.html">About Us</a></li>
-                        <li><a href="../../../../features/contact/html/contact.html">Contact Us</a></li>
+                        <li><a href="../../../home/html/homepage.php">Home</a></li>
+                        <li><a href="../../../product/html/product.php">Products</a></li>
+                        <li><a href="../../../about/html/about.html">About Us</a></li>
+                        <li><a href="../../../contact/html/contact.html">Contact Us</a></li>
                     </ul>
                 </nav>
 
@@ -65,10 +67,21 @@
                 <img src="../../../../features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()">
             </div>
 
-            
+
             <div class="small-container">
-                <form action="login.php" method="post">
+                <form action="./login.php" method="POST">
                     <h2>Login</h2>
+                    <?php
+                    if (isset($_SESSION['login'])) {
+                        echo $_SESSION['login'];
+                        unset($_SESSION['login']);
+                    }
+                    if (isset($_SESSION['no-login-msg'])) {
+                        echo $_SESSION['no-login-msg'];
+                        unset($_SESSION['no-login-msg']);
+                    }
+
+                    ?>
                     <div class="group">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <label for="username">Username</label>
@@ -79,7 +92,7 @@
                         <input type="password" id="password" name="password" required>
                         <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
                     </div><br>
-                    
+
 
                     <input type="submit" value="Login">
                 </form>

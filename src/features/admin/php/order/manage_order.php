@@ -24,10 +24,20 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
 }
+if(isset($_POST['update'])){
 
-$conn->close();
+    $order_update=$_POST['id'];
+    mysqli_query($conn,"UPDATE `order_tbl` set payment_status='$update_payment'") or die
+    ('query failed ');
+    $message[]='Payment status has been updated';
 
-    ?>
+
+
+}
+
+
+
+?>
 
 
 
@@ -45,6 +55,9 @@ $conn->close();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="../../css/admin.css">
     <link rel="stylesheet" href="../../css/cat.css">
+    <link rel="stylesheet" href="./css/order.css">
+
+    <link rel="stylesheet" href="../admin/css/adminnn.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Home page</title>
@@ -59,11 +72,12 @@ $conn->close();
                 </div>
                 <nav>
                     <ul id="MenuItems">
-                    <li><a href="../homepage/index.php">Home</a></li>
+                        <li><a href="../homepage/index.php">Home</a></li>
                         <li><a href="../../php/admin/manage_admin.php">Admin</a></li>
                         <li><a href="../../php/product/manage_product.php">Products</a></li>
                         <li><a href="../../php/category/manage_cat.php">Category</a></li>
                         <li><a href="../../php/order/manage_order.php">Order</a></li>
+                        <li><a href="../../php/messages/message.php">Order</a></li>
                         <li><a href="../admin/logout/logout.php">Logout</a></li>
                     </ul>
                 </nav>
@@ -72,53 +86,74 @@ $conn->close();
     </div>
 
 
-<!-----categories----->
+    <!-----categories----->
 
-<div class="main-content">
-        <div class="wrapper">
-        <h1>Manage Order</h1>
 
-        <br /> <br /> <br />
-
+    <section class="orders">
+        <h1>Placed Order</h1>
+        <br><br>
 
 
 
+        <div class="box-container">
+            <?php
+
+            $select_orders = mysqli_query($conn, "SELECT * FROM `order_tbl`") or die('query failed');
+            if (mysqli_num_rows($select_orders) > 0) {
+                while ($fetch_orders = mysqli_fetch_assoc($select_orders)) {
+            ?>
+                    <div class="box">
 
 
-<table class="tbl-full">
-    <tr>
-        <th>S.N</th>
-        <th>Username</th>
-        <th>Actions</th>
-    </tr>
-    <tr>
-        <td>1.</td>
-        <td>Arpana</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>2.</td>
-        <td>Meowwyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
-    <tr>
-        <td>3.</td>
-        <td>Puppyyy</td>
-        <td>
-            <a href="#" class="btn-secondary">Update Admin</a>
-            <a href="#" class="btn-danger">Delete Admin</a>
-        </td>
-    </tr>
+                        <p>Username:<span><?php echo $fetch_orders['user_name']; ?></span></p>
 
-</table>
-    </div>
-</div>
+                        <p>Email:<span><?php echo $fetch_orders['user_email']; ?></span></p>
+
+                        <p>Contact:<span><?php echo $fetch_orders['user_contact']; ?></span></p>
+                        <p>Total Products:<span><?php echo $fetch_orders['total_products']; ?></span></p>
+                        <p>Payment Method:<span><?php echo $fetch_orders['payment_method']; ?></span></p>
+                        <p>Total Quantity:<span><?php echo $fetch_orders['total_quantity']; ?></span></p>
+                        <p>Total price:<span><?php echo $fetch_orders['total_price']; ?></span></p>
+                        <p>Payment:<span><?php echo $fetch_orders['payment_status']; ?></span></p>
+
+                        <p>Address:<span><?php echo $fetch_orders['user_address']; ?></span></p>
+                        <p>Placed On:<span><?php echo $fetch_orders['placed_on']; ?></span></p>
+                        <form action="" method="POST">
+                            <input type="hidden" name="order_id" value="<?php echo $fetch_orders['payment_method']; ?>">
+                            <select name="update_payment" id="">
+                                <option value="" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                            </select>
+
+                            <a href="./manage_order.php?delete=<?php echo $fetch_orders['id']; ?>" class="btn-secondary">Update</a>
+                            <a href="./manage_order.php?update=<?php echo $fetch_orders['id']; ?>" class="btn-danger">Delete</a>
+
+
+                        </form>
+
+
+                    </div>
+            <?php
+
+                }
+            } else {
+                echo "<div class='error'>No orders placed yet</div>";
+            }
+
+            ?>
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
 
 
 
