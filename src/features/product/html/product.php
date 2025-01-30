@@ -3,13 +3,29 @@
 
 
 include('../../partials/partials.php');
-// Check if the user is logged in
-// if (!isset($_SESSION['admin'])) {
-//     // If not logged in, redirect to the login page
-//     header("Location: ../../account/php/login/login.php");
-//     header("location:../../account/php/register/register.php");
-//     exit();
-// }
+
+
+if (isset($_POST['add_to_cart'])) {
+    $user_id = $_POST['user_id'];
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['price'];
+    $image_name = $_POST['image'];
+
+    $quantity = $_POST['quantity'];
+
+    $check_cart_numbers = mysqli_query($conn, "SELECT * from `cart` where product_name='$product_name' and user_id='$user_id'
+
+    ") or die('query Failed');
+    if (mysqli_num_rows($check_cart_numbers) > 0) {
+        echo "<script>alert('Product already added to cart!');</script>";
+    } else {
+        mysqli_query($conn, "INSERT INTO `cart` (user_id,product_name,price,image,quantity)
+        values ('$user_id','$product_name','$product_price','$image_name','$quantity')
+        ")
+            or die('query failed');
+        echo "<script>alert('Product added to cart!');</script>";
+    }
+}
 
 ?>
 
@@ -45,6 +61,19 @@ include('../../partials/partials.php');
                 <ul id="MenuItems">
                     <li><a href="../../home/html/homepage.php">Home</a></li>
                     <li><a href="../html/product.php">Products</a></li>
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        $user_id = $_SESSION['user_id']; // Get user ID from session
+                    } else {
+                        $user_id = null; // Set it to null if not logged in
+                    }
+                    $select_cart_number = mysqli_query($conn, "SELECT * FROM `cart` where user_id='$user_id'") or die('query failed');
+                    $cart_row_numbers = mysqli_num_rows($select_cart_number);
+
+                    ?>
+                    <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php
+                                                                                                                    echo $cart_row_numbers;
+                                                                                                                    ?>)</span></a>
                     <li><a href="../../about/html/about.html">About Us</a></li>
                     <li><a href="../../contact/html/contact.html">Contact Us</a></li>
                 </ul>
@@ -106,7 +135,15 @@ include('../../partials/partials.php');
                     <span>&#9734;</span>
                     <span>&#9734;</span>
                     <p><?php echo 'Rs.' . number_format($price, 2); ?></p>
-                    <button onclick="checkLoginStatus()">Add to Cart</button>
+                    <form action="" method="POST">
+                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                        <input type="hidden" name="product_name" value="<?php echo $title; ?>">
+                        <input type="hidden" name="price" value="<?php echo $price; ?>">
+                        <input type="hidden" name="image" value="<?php echo $image_name; ?>">
+                        <input type="hidden" name="quantity" value="<?php echo $quantity; ?>">
+                        <button type="submit" class="btn" name="add_to_cart">Add to Cart</button>
+                    </form>
+
 
                 </div>
         <?php
@@ -165,48 +202,9 @@ include('../../partials/partials.php');
                 menuItems.style.display = "block";
             }
         }
-
-        function checkLoginStatus(id, name, price, image) {
-            // Check if user is logged in
-            var isLoggedIn = <?php echo isset($_SESSION['user_id']) ? 'true' : 'false'; ?>;
-
-            if (!isLoggedIn) {
-                // Redirect to login page with product details
-                const queryParams = new URLSearchParams({
-                    id,
-                    name,
-                    price,
-                    image
-                }).toString();
-                window.location.href = `../../account/php/register/register1.php?${queryParams}`;
-            } else {
-                // If logged in, add the item to the cart
-                addToCartDatabase(id);
-            }
-        }
-
-        function addToCartDatabase(productId) {
-            fetch("../../cart/php/add_to_cart.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: `product_id=${productId}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Product added to cart successfully!");
-                        window.location.href = "../../cart/html/cart.php";
-                    } else {
-                        alert("Error adding product to cart.");
-                    }
-                })
-                .catch(error => console.error("Error:", error));
-        }
     </script>
-    <script src="../js/product.js">
-    </script>
+    <!-- <script src="../js/product.js">
+    </script> -->
     <script src="../../../common/js/index.js"></script>
 </body>
 

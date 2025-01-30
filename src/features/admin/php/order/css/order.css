@@ -1,14 +1,19 @@
 .box-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 100px;
-    justify-content: space-between;
+    gap: 10px;
+
+    padding: 50px;
+
+    justify-content: center;
+
 }
+
 
 
 .box {
     width: 20%;
+    min-width: 250px;
     padding: 15px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -25,8 +30,10 @@
     font-weight: bold;
     color: #333;
 }
-.box form{
-    text-align: center;;
+
+.box form {
+    text-align: center;
+    
 }
 
 .box form select {

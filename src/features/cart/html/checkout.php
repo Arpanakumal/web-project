@@ -1,25 +1,60 @@
 <?php
 include('../../partials/partials.php');
 
-if (isset($_GET['id'])) {  // Corrected `isset` usage and removed semicolon
-    $product_id = $_GET['id'];
-    $sql = "SELECT * FROM products where id=$product_id";
-    $res = mysqli_query($conn, $sql);
-    $count = mysqli_num_rows($res);
-    if ($count == 1) {
-        $row = mysqli_fetch_assoc($res);
-        $title = $row['title'];
-        $price = $row['price'];
-        $image_name = $row['image'];
-    } else {
-        header("Location:../../home/html/homepage.php");
+$user_id = $_SESSION['user_id'];
+if (!isset($user_id)) {
+    header("Location:../../account/php/login/login1.php");
+    exit();
+}
+
+if (isset($_POST['order-btn'])) {
+    $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id='$user_id'");
+
+    // Check if query was successful
+    if (!$cart_query) {
+        // Log or display error message if the query fails
+        die("Query failed: " . mysqli_error($conn));
     }
-} else {
-    echo "Product ID not provided.";
+
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $number = mysqli_real_escape_string($conn, $_POST['number']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $method = mysqli_real_escape_string($conn, $_POST['payment_method']);
+    $status = mysqli_real_escape_string($conn, $_POST['payment_status']);
+    $address = mysqli_real_escape_string($conn, 'flat no.' . $_POST['flat'] . ',' . $_POST['city'] . ',' . $_POST['pin_code']);
+    $placed_on = date('d-M-Y H:i:s');  // Added time in the format
+    $cart_total = 0;
+    $cart_products = [];
+    $total_products = '';  // Initialize the total_products variable properly
+
+    // Construct cart products and total
+    if (mysqli_num_rows($cart_query) > 0) {
+        while ($cart_item = mysqli_fetch_assoc($cart_query)) {
+            $cart_products[] = $cart_item['product_name'] . ' (' . $cart_item['quantity'] . ')';
+            $cart_total += ($cart_item['price'] * $cart_item['quantity']);
+        }
+    } else {
+        echo "<script>alert('Your cart is empty');</script>";
+    }
+
+    // Insert order into the database
+    if ($cart_total > 0) {
+        $total_products = implode(',', $cart_products); // Ensures proper escaping for product list
+        $order_query = mysqli_query($conn, "INSERT INTO `order_tbl` (user_id,user_name, user_contact, user_email, user_address, payment_method,payment_status, total_products, total_price, placed_on) 
+                                            VALUES ('$user_id','$name', '$number', '$email', '$address', '$method','$status', '$total_products', '$cart_total', '$placed_on')");
+        if (!$order_query) {
+            // Log or display error message if the query fails
+            die("Order query failed: " . mysqli_error($conn));
+        }
+
+        echo "<script>alert('Order placed successfully');</script>";
+
+        // Clear cart after order placement
+        mysqli_query($conn, "DELETE FROM `cart` WHERE user_id='$user_id'") or die(mysqli_error($conn));
+    }
 }
 
 ?>
-
 
 
 
@@ -34,7 +69,7 @@ if (isset($_GET['id'])) {  // Corrected `isset` usage and removed semicolon
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../common/css/1.css">
 
-    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="../css/checkout.css?v=2">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,8 +92,21 @@ if (isset($_GET['id'])) {  // Corrected `isset` usage and removed semicolon
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="../../home/html/homepage.php">Home</a></li>
-                        <li><a href="../../product/html/product11.php">Products</a></li>
+                        <li><a href="../../product/html/product.php">Products</a></li>
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id']; // Get user ID from session
+                        } else {
+                            $user_id = null; // Set it to null if not logged in
+                        }
+                        $select_cart_number = mysqli_query($conn, "SELECT * FROM `cart` where user_id='$user_id'") or die('query failed');
+                        $cart_row_numbers = mysqli_num_rows($select_cart_number);
+
+                        ?>
+                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers; ?>)</span></a>
+                        <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
                         <li><a href="../../about/html/about.html">About Us</a></li>
+                        <li><a href="../../order/php/order.php">Contact Us</a></li>
                         <li><a href="../../contact/html/contact.html">Contact Us</a></li>
                     </ul>
                     <!-- <a href="../../../features/cart/html/cart.html">
@@ -85,36 +133,97 @@ if (isset($_GET['id'])) {  // Corrected `isset` usage and removed semicolon
             </div>
         </div>
     </div>
+    <section class="display-order">
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+        } else {
+            $user_id = null;
+        }
+        $grand_total = 0;
+        $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id='$user_id'") or die('query failed');
+
+        if (mysqli_num_rows($select_cart) > 0) {
+            while ($fetch_cart = mysqli_fetch_assoc($select_cart)) {
+                $total_price = ($fetch_cart['price'] * $fetch_cart['quantity']);
+                $grand_total += $total_price;
+        ?>
+                <div class="order-item">
+                    <label class="product-label">Product:</label>
+                    <span class="product-name"><?php echo $fetch_cart['product_name']; ?></span>
+
+                    <label class="price-label">Price:</label>
+                    <span class="product-price"><?php echo 'Rs.' . $fetch_cart['price'] . '/-'; ?></span>
+
+                    <label class="quantity-label">Quantity:</label>
+                    <span class="product-quantity"><?php echo 'x' . $fetch_cart['quantity']; ?></span>
+                </div>
+        <?php
+            }
+        } else {
+            echo '<p class="empty">Your Cart is empty</p>';
+        }
+        ?>
+        <div class="grand-total-box">
+            <label class="grand-total-label">Grand Total:</label>
+            <span class="grand-total">Rs. <?php echo  $grand_total; ?>/-</span>
+        </div>
+    </section>
+    <br><br>
 
 
-    <div class="small-container">
-        <h2>Checkout</h2><br><br>
+    <section class="checkout">
+        <form action="" method="POST">
+            <h3>Place Your Order</h3>
+            <div class="flex">
+                <div class="inputbox">
+                    <span>Your name:</span>
+                    <input type="text" name="name" placeholder="Enter your name">
+                </div>
+                <div class="inputbox">
+                    <span>Your number:</span>
+                    <input type="tel" name="number" placeholder="Enter your number">
+                </div>
 
-        <form action="" method="POST" onsubmit="validateForm(event)">
-            
-            <legend>Delivery Details</legend><br>
-            <div class="group">
-                <input type="text" name="fullname" id="fullname" placeholder="Enter Your Fullname">
-            </div><br>
-            <div class="group">
-                <input type="tel" name="phone" id="phone" placeholder="Enter  Your Phone Number">
-            </div><br>
-            <div class="group">
-                <input type="text" name="email" id="email" placeholder="Enter Your email">
-            </div><br>
-            <div class="group">
-                <input type="text" name="address" id="address" placeholder="Enter Your Address">
-            </div><br>
+                <div class="inputbox">
+                    <span>Your Email:</span>
+                    <input type="text" name="email" placeholder="Enter your Email">
+                </div>
+                <div class="inputbox">
+                    <span>Payment Method:</span>
+                    <select name="payment_method" id="">
+                        <option value="Cash On Delivery">Cash On Delivery</option>
+                        <option value="credit card">Credit Card</option>
+                    </select>
 
+                </div>
+                <div class="inputbox">
+                    <span>Payment Status:</span>
+                    <select name="payment_status" id="">
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
 
-
-
-            <input type="submit" name="submit" id="btn" value="Confirm Order"><br>
-
-
+                </div>
+                <div class="inputbox">
+                    <span>Your Address Line :</span>
+                    <input type="number" min="0" name="flat" placeholder="e.g. flat no.">
+                </div>
+                <div class="inputbox">
+                    <span>City:</span>
+                    <input type="text" name="city" placeholder="e.g. Kathmandu">
+                </div>
+                <div class="inputbox">
+                    <span>Pincode:</span>
+                    <input type="number" name="pin_code" min="0" placeholder="e.g.12345">
+                </div>
+            </div><br><br>
+            <a href="../../order/php/order.php">
+                <input type="submit" value="Order Now" class="btn" name="order-btn">
+            </a>
         </form>
+    </section>
 
-    </div>
 
     <!-- Footer -->
     <div class="footer">

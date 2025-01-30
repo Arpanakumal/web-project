@@ -1,43 +1,12 @@
 <?php
-
 include('../../partials/partials.php');
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = null; // Handle cases where the user is not logged in
+$user_id = $_SESSION['user_id'];
+if (!isset($user_id)) {
+    header("Location:../../../account/php/login/login1.php");
+    exit();
 }
-
-if (isset($_POST['Update_cart'])) {
-    $cart_id = $_POST['cart_id'];
-    $cart_quantity = $_POST['cart_quantity'];
-    $query = "UPDATE `cart` SET quantity='$cart_quantity' WHERE cart_id='$cart_id'";
-
-    if (!mysqli_query($conn, $query)) {
-        die('Error: ' . mysqli_error($conn)); // Error reporting
-    } else {
-        echo "<script>alert('Cart quantity updated');</script>";
-    }
-}
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-    mysqli_query($conn, "DELETE FROM   `cart` where cart_id='$delete_id'") or die('query failed');
-    header("Location: ./cart.php");
-}
-if (isset($_GET['delete_all'])) {
-
-    mysqli_query($conn, "DELETE FROM   `cart` where user_id='$user_id'") or die('query failed');
-    header("Location: ./cart.php");
-}
-
-
-
-
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,11 +14,13 @@ if (isset($_GET['delete_all'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../common/css/1.css">
-    <link rel="stylesheet" href="../css/cart.css?v=2">
-    <link rel="stylesheet" href="../../admin/css/admin.css">
-    <link rel="stylesheet" href="../../admin/css/cat.css">
+
+    <link rel="stylesheet" href="../css/order.css?v=2">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -107,65 +78,69 @@ if (isset($_GET['delete_all'])) {
             </div>
         </div>
     </div>
-    <br><br><br>
 
-    <!-- Cart Item -->
-    <section class="shopping-cart">
-        <h1>Products Added</h1><br><br>
-        <div class="box-container">
+
+
+    <section class="box-container">
+        <h1 class="title">Placed Orders</h1><br>
+        <div class="box">
             <?php
-            $grand_total = 0;
-            $select_cart = mysqli_query($conn, "SELECT * FROM `cart` where user_id='$user_id'") or die('query failed');
-            if (mysqli_num_rows($select_cart) > 0) {
-                while ($fetch_cart = mysqli_fetch_assoc($select_cart)) {
+            $order_query = mysqli_query($conn, "SELECT * FROM `order_tbl` WHERE user_id='$user_id'") or die('Query failed');
+            if (mysqli_num_rows($order_query) > 0) {
+                while ($fetch_orders = mysqli_fetch_assoc($order_query)) {
             ?>
-                    <div class="box">
-                        <a href="./cart.php?delete=<?php echo $fetch_cart['cart_id']; ?>" class="fa fa-times"></a>
-
-
-
-                        <img src="../../admin/php/product/images/<?php echo $fetch_cart['image']; ?>" alt="Product Image">
-
-
-                        <div class="name"><?php echo $fetch_cart['product_name'] ?></div>
-                        <div class="price">Rs:<?php echo  $fetch_cart['price'] ?></div>
-                        <form action="" method="POST">
-                            <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['cart_id'] ?>">
-                            <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['quantity'] ?>">
-                            <input type="submit" name="Update_cart" value="Update" class="btn-primary">
-
-
-
-                        </form>
-                        <div class="sub-total">
-                            Sub Total=<span>Rs.<?php echo $sub_total = ($fetch_cart['quantity'] * $fetch_cart['price']); ?>/-
-                            </span></div>
+                    <div class="order-form">
+                        <div class="form-group">
+                            <label for="placed_on">Placed On:</label>
+                            <span id="placed_on"><?php echo $fetch_orders['placed_on']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name">Name:</label>
+                            <span id="user_name"><?php echo $fetch_orders['user_name']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_contact">Number:</label>
+                            <span id="user_contact"><?php echo $fetch_orders['user_contact']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_email">Email:</label>
+                            <span id="user_email"><?php echo $fetch_orders['user_email']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="user_address">Address:</label>
+                            <span id="user_address"><?php echo $fetch_orders['user_address']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_method">Payment Method:</label>
+                            <span id="payment_method"><?php echo $fetch_orders['payment_method']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_products">Your Orders:</label>
+                            <span id="total_products"><?php echo $fetch_orders['total_products']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="total_price">Total Price:</label>
+                            <span id="total_price"><?php echo $fetch_orders['total_price']; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_status">Payment Status:</label>
+                            <span id="payment_status" style="color:<?php
+                                                                    if ($fetch_orders['payment_status'] == 'pending') {
+                                                                        echo 'red';
+                                                                    } else {
+                                                                        echo 'green';
+                                                                    } ?>;"><?php echo $fetch_orders['payment_status']; ?></span>
+                        </div>
                     </div>
-
             <?php
-                    $grand_total += $sub_total;
                 }
             } else {
-                echo '<p class="empty">Your Cart is empty</p>';
+                echo "<script>alert('No orders placed yet');</script>";
             }
             ?>
         </div>
-        <div style="margin-top:2rem; text-align:center;">
-            <a href="./cart.php?delete_all" class="btn-danger<?php echo ($grand_total > 1) ? '' : ''; ?>" onclick=" return confirm
-            ('delete all from cart ?');
-            ">Delete All </a><br><br><br>
-        </div>
-        <div class="cart-total">
-            <p>Grand total:<span>Rs.<?php echo $grand_total; ?>/-</span></p><br><br><br>
-            <div class="flex">
-                <a href="../../product/html/product.php" class="btn-primary">Continue Shopping</a>
-                <a href="./checkout.php" class="btn-primary<?php echo ($grand_total > 1) ? '' : ''; ?>">Proceed to Checkout</a>
-            </div>
-        </div>
     </section>
 
-
-    <!-- Footer -->
     <div class="footer">
         <div class="container">
             <div class="row">
@@ -189,7 +164,7 @@ if (isset($_GET['delete_all'])) {
     </div>
 
     <!-- JS for Toggle Menu -->
-    <!-- <script src="../js/cart.js"></script> -->
+    <script src="../js/cart.js"></script>
     <script src="../../../common/js/index.js"></script>
 </body>
 

@@ -43,7 +43,17 @@
                         <li><a href="../../../features/about/html/about.html">About Us</a></li>
                         <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
                         <a href="../../account/php/register/register1.php"><i class="fa fa-fw fa-user"></i></a>
-                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id']; // Get user ID from session
+                        } else {
+                            $user_id = null; // Set it to null if not logged in
+                        }
+                        $select_cart_number = mysqli_query($conn, "SELECT * FROM `cart` where user_id='$user_id'") or die('query failed');
+                        $cart_row_numbers = mysqli_num_rows($select_cart_number);
+
+                        ?>
+                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers;?>)</span></a>
                         <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
 
                     </ul>
