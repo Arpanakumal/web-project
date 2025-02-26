@@ -22,7 +22,7 @@ if (isset($_POST['order-btn'])) {
     $method = mysqli_real_escape_string($conn, $_POST['payment_method']);
     $status = mysqli_real_escape_string($conn, $_POST['payment_status']);
     $address = mysqli_real_escape_string($conn, 'flat no.' . $_POST['flat'] . ',' . $_POST['city'] . ',' . $_POST['pin_code']);
-    $placed_on = date('d-M-Y H:i:s');  // Added time in the format
+    $placed_on = date('Y-m-d H:i:s');  // Added time in the format
     $cart_total = 0;
     $cart_products = [];
     $total_products = '';  // Initialize the total_products variable properly
@@ -40,8 +40,19 @@ if (isset($_POST['order-btn'])) {
     // Insert order into the database
     if ($cart_total > 0) {
         $total_products = implode(',', $cart_products); // Ensures proper escaping for product list
-        $order_query = mysqli_query($conn, "INSERT INTO `order_tbl` (user_id,user_name, user_contact, user_email, user_address, payment_method,payment_status, total_products, total_price, placed_on) 
-                                            VALUES ('$user_id','$name', '$number', '$email', '$address', '$method','$status', '$total_products', '$cart_total', '$placed_on')");
+        $total_quantity = 0;
+        if (!empty($total_products)) {
+            // Split the products string into individual entries
+            $productEntries = explode(',', $total_products);
+            foreach ($productEntries as $entry) {
+                // Use regex to match a number inside parentheses
+                if (preg_match('/\((\d+)\)/', $entry, $matches)) {
+                    $total_quantity += (int)$matches[1];
+                }
+            }
+        }
+        $order_query = mysqli_query($conn, "INSERT INTO `order_tbl` (user_id,user_name, user_contact, user_email, user_address, payment_method,payment_status, total_products, total_price, placed_on,total_quantity) 
+                                            VALUES ('$user_id','$name', '$number', '$email', '$address', '$method','$status', '$total_products', '$cart_total', '$placed_on','$total_quantity')");
         if (!$order_query) {
             // Log or display error message if the query fails
             die("Order query failed: " . mysqli_error($conn));
@@ -80,6 +91,19 @@ if (isset($_POST['order-btn'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Clothing Palette</title>
+    <style>
+        .search-icon-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .search-icon-btn i {
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -93,6 +117,11 @@ if (isset($_POST['order-btn'])) {
                     <ul id="MenuItems">
                         <li><a href="../../home/html/homepage.php">Home</a></li>
                         <li><a href="../../product/html/product.php">Products</a></li>
+
+                        <li><a href="../../about/html/about.php">About Us</a></li>
+                        <li><a href="../../contact/html/contactpage.php">Contact Us</a></li>
+                        <li><a href="../../cart/html/order.php">Orders</a></li>
+                        <a href="../../account/php/register/register1.php"><i class="fa fa-fw fa-user"></i></a>
                         <?php
                         if (isset($_SESSION['user_id'])) {
                             $user_id = $_SESSION['user_id']; // Get user ID from session
@@ -104,10 +133,15 @@ if (isset($_POST['order-btn'])) {
 
                         ?>
                         <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers; ?>)</span></a>
-                        <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
-                        <li><a href="../../about/html/about.html">About Us</a></li>
-                        <li><a href="../../order/php/order.php">Contact Us</a></li>
-                        <li><a href="../../contact/html/contact.html">Contact Us</a></li>
+                        <div class="input-wrapper">
+                            <form action="../../home/html/search.php" method="POST" id="searchForm">
+                                <input type="search" name="search" placeholder="Search Product" id="searchInput">
+                                <!-- Search icon as a button -->
+                                <button type="submit" name="submit" class="search-icon-btn">
+                                    <i class="fa fa-search"></i> <!-- Search icon -->
+                                </button>
+                            </form>
+                        </div>
                     </ul>
                     <!-- <a href="../../../features/cart/html/cart.html">
                         <img src="../../../common/images/cart.webp" width="30px" height="30px">
@@ -115,20 +149,7 @@ if (isset($_POST['order-btn'])) {
 
                     <img src="../../../features/home/images/menu1.jpeg" class="menu-icon" onclick="menutoggle()" alt="Menu Icon"><img src="../images/menu.jpeg" class="menu-icon" onclick="menutoggle()">
                 </nav>
-                <div class="input-wrapper">
-                    <form action="./search.php" method="POST">
-                        <input type="search" name="search" placeholder="Search Product">
 
-                        <input type="submit" name="submit" value="Search" class="btn btn-primary">
-
-
-                    </form>
-                    <!-- <a href="../html/search.php"></a>
-                    <input type="search" name="search" placeholder="Search Product" class="search-field">
-                    <button class="search-submit" aria-label="search">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button> -->
-                </div>
 
             </div>
         </div>

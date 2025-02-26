@@ -6,36 +6,29 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
-    // $Full_name = $_POST['Full_name'] ?? '';
-    // $username = $_POST['username'] ?? '';
-    // $password = md5($_POST['password']) ?? ''; //password encryption
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "admin";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "admin";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
+// Query the counts of categories, products, users, and order
+$adminCount = $conn->query("SELECT COUNT(*) AS total FROM admin_users")->fetch_assoc()['total'];
+$categoryCount = $conn->query("SELECT COUNT(*) AS total FROM cat_admin")->fetch_assoc()['total'];
+$productCount = $conn->query("SELECT COUNT(*) AS total FROM products")->fetch_assoc()['total'];
+$userCount = $conn->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc()['total'];
+$orderCount = $conn->query("SELECT COUNT(*) AS total FROM order_tbl")->fetch_assoc()['total'];
+$messageCount = $conn->query("SELECT COUNT(*) AS total FROM messages")->fetch_assoc()['total'];
+
 $conn->close();
-
 ?>
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +69,6 @@ $conn->close();
         </div>
     </div>
 
-
     <!-------main content-->
     <div class="main-content">
         <div class="wrapper">
@@ -87,32 +79,40 @@ $conn->close();
                 echo $_SESSION['login'];
                 unset($_SESSION['login']);
             }
-
             ?>
             <br><br>
             <div class="col-4">
-                <h2>4</h2>
+                <h2><?php echo $adminCount; ?></h2>
+                <br>
+                Admin
+            </div>
+            <div class="col-4">
+                <h2><?php echo $categoryCount; ?></h2>
                 <br>
                 Categories
             </div>
             <div class="col-4">
-                <h2>4</h2>
+                <h2><?php echo $productCount; ?></h2>
                 <br>
-                Categories
+                Products
             </div>
             <div class="col-4">
-                <h2>4</h2>
+                <h2><?php echo $userCount; ?></h2>
                 <br>
-                Categories
+                Users
             </div>
             <div class="col-4">
-                <h2>4</h2>
+                <h2><?php echo $orderCount; ?></h2>
                 <br>
-                Categories
+                Placed Orders
+            </div>
+            <div class="col-4">
+                <h2><?php echo $messageCount; ?></h2>
+                <br>
+                New Messages
             </div>
         </div>
-    </div>
-
+    </div><br><br><br><br><br>
 
 
 

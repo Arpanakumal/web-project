@@ -91,6 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="group">
 
+                        <label for="quantity">Quantity</label><br>
+                        <textarea name="quantity" id="quantity" placeholder="Quantity"></textarea>
+                    </div>
+                    <div class="group">
+
                         <label for="price">Price</label><br>
                         <input type="number" name="price" placeholder=""></input>
                     </div><br>
@@ -151,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
                     $title = $_POST['title'] ?? '';
+                    $quantity = $_POST['quantity'] ?? '';
                     $description = $_POST['description'] ?? '';
                     $price = $_POST['price'] ?? 0;
                     $categories_id = $_POST['category'] ?? 0;

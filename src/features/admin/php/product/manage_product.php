@@ -124,8 +124,10 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                 <tr>
                     <th>S.N</th>
                     <th>Title</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>Image</th>
+
                     <th>Feature</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -140,6 +142,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $id = $row['id'];
                         $title = $row['title'];
+                        $quantity = $row['quantity'];
                         $price = $row['price'];
                         $image_name = $row['image'];
                         $feature = $row['feature'];
@@ -148,6 +151,7 @@ if (isset($_SERVER['REQUEST_METHOD']) == 'POST') {
                         <tr>
                             <td><?php echo $sn++; ?></td>
                             <td><?php echo $title; ?></td>
+                            <td><?php echo $quantity; ?></td>
                             <td>Rs.<?php echo $price; ?></td>
                             <td>
                                 <?php

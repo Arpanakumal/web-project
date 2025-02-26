@@ -55,8 +55,8 @@
                     <ul id="MenuItems">
                         <li><a href="../../../home/html/homepage.php">Home</a></li>
                         <li><a href="../../../product/html/product.php">Products</a></li>
-                        <li><a href="../../../about/html/about.html">About Us</a></li>
-                        <li><a href="../../../contact/html/contact.html">Contact Us</a></li>
+                        <li><a href="../../../about/html/about.php">About Us</a></li>
+                        <li><a href="../../../contact/html/contactpage.php">Contact Us</a></li>
                     </ul>
                 </nav>
 
@@ -86,12 +86,21 @@
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Enter Username">
-                    </div><br>
+                    </div>
                     <div class="group">
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="password" required>
                         <i id="eye" class="fa fa-eye" style="cursor: pointer;"></i>
-                    </div><br>
+                    </div>
+                    <div class="group">
+
+                        <select name="user_type" id="">
+
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
 
 
                     <input type="submit" value="Login">

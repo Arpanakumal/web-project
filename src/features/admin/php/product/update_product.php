@@ -78,6 +78,7 @@ if ($conn->connect_error) {
         //get individual product
         $title = $row2['title'];
         $description = $row2['description'];
+        $quantity = $row2['quantity'];
         $price = $row2['price'];
         $current_image = $row2['image'];
         $current_category = $row2['categories_id'];
@@ -105,6 +106,10 @@ if ($conn->connect_error) {
                     <div class="group">
                         <label for="description">Description</label>
                         <textarea name="description" cols="30" rows="5"><?php echo $description; ?></textarea>
+                    </div>
+                    <div class="group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" name="quantity" id="quantity" value="<?php echo $quantity; ?>">
                     </div>
                     <div class="group">
                         <label for="price">Price:</label>
@@ -186,6 +191,7 @@ if ($conn->connect_error) {
                     $id = $_POST['id'];
                     $title = $_POST['title'];
                     $description = $_POST['description'];
+                    $quantity = $_POST['quantity'];
                     $price = $_POST['price'];
                     $current_image = $_POST['current_image'];
                     $category = $_POST['category'];
@@ -236,6 +242,7 @@ if ($conn->connect_error) {
                     $sql3 = " UPDATE products set
                     title= '$title',
                     description= '$description',
+                    quantity = '$quantity',
                     price= $price,
                     categories_id='$category',
                     image= '$image_name',

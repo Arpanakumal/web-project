@@ -51,8 +51,8 @@
                     <ul id="MenuItems">
                         <li><a href="../../../home/html/homepage.php">Home</a></li>
                         <li><a href="../../../product/html/product.php">Products</a></li>
-                        <li><a href="../../../about/html/about.html">About Us</a></li>
-                        <li><a href="../../../contact/html/contact.html">Contact Us</a></li>
+                        <li><a href="../../../about/html/about.php">About Us</a></li>
+                        <li><a href="../../../contact/html/contactpage.php">Contact Us</a></li>
                         
                     </ul>
                 </nav>

@@ -68,6 +68,8 @@ h3 {
 }
 
 
+
+
 @media screen and (max-width:600px) {
     .listproduct {
         grid-template-columns: repeat(3, 1fr);

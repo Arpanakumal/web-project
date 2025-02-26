@@ -1,16 +1,7 @@
 <!-- <?php
         session_start();
         include('../../partials/partials.php');
-        // if ($res && $res->num_rows == 1) {
-        //     $_SESSION['login'] = "<div class='success'>Login Successful</div>";
-        //     $_SESSION['user'] = $username;
-        //     header("Location:homepage.php");
-        //     exit();
-        // } else {
-        //     $_SESSION['login'] = "<div class='error'>Invalid Username or Password</div>";
-        //     header("Location: ../../../features/account/php/login/login1.php");
-        //     exit();
-        // }
+
 
         ?> -->
 <!DOCTYPE html>
@@ -27,6 +18,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Clothing Palette</title>
+    <style>
+        .search-icon-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .search-icon-btn i {
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,8 +44,9 @@
                     <ul id="MenuItems">
                         <li><a href="../html/homepage.php">Home</a></li>
                         <li><a href="../../../features/product/html/product.php">Products</a></li>
-                        <li><a href="../../../features/about/html/about.html">About Us</a></li>
-                        <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
+                        <li><a href="../../../features/about/html/about.php">About Us</a></li>
+                        <li><a href="../../../features/contact/html/contactpage.php">Contact Us</a></li>
+                        <li><a href="../../cart/html/order.php">Orders</a></li>
                         <a href="../../account/php/register/register1.php"><i class="fa fa-fw fa-user"></i></a>
                         <?php
                         if (isset($_SESSION['user_id'])) {
@@ -53,31 +58,23 @@
                         $cart_row_numbers = mysqli_num_rows($select_cart_number);
 
                         ?>
-                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers;?>)</span></a>
-                        <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
+                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers; ?>)</span></a>
+                        <div class="input-wrapper">
+                            <form action="./search.php" method="POST" id="searchForm">
+                                <input type="search" name="search" placeholder="Search Product" id="searchInput">
+                                <!-- Search icon as a button -->
+                                <button type="submit" name="submit" class="search-icon-btn">
+                                    <i class="fa fa-search"></i> <!-- Search icon -->
+                                </button>
+                            </form>
+                        </div>
+
 
                     </ul>
-                    <!-- <a href="../../../features/cart/html/cart.html">
-                        <img src="../../../common/images/cart.webp" width="30px" height="30px">
-                    </a> -->
+
 
                     <img src="../images/menu.jpeg" class="menu-icon" onclick="menutoggle()">
                 </nav>
-                <div class="input-wrapper">
-                    <form action="./search.php" method="POST">
-
-                        <input type="search" name="search" placeholder="Search Product">
-
-                        <input type="submit" name="submit" value="Search" class="btn btn-primary">
-
-
-                    </form>
-                    <!-- <a href="../html/search.php"></a>
-                    <input type="search" name="search" placeholder="Search Product" class="search-field">
-                    <button class="search-submit" aria-label="search">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button> -->
-                </div>
 
 
 
@@ -143,9 +140,9 @@
             <h2 class="Title">Latest products</h2>
             <div class="category-row">
                 <div class="category-item">
-                    <a href="../../product/html/productdetail.html">
-                        <img src="../../../features/product/images/product5.jpg">
-                    </a>
+
+                    <img src="../../../features/product/images/product5.jpg">
+
 
                     <h3>Sweet Lace cardigan sweater</h3>
 
@@ -184,7 +181,6 @@
 
                     <small>The Casual Sweater is a perfect need for casual wears this winter<br></small>
 
-                    <a href="../../product/html/product.php" class="btn">Buy Now&#8594;</a>
                 </div>
             </div>
         </div>

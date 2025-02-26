@@ -16,7 +16,26 @@
         } else {
             // header("Location:./homepage.php");
         }
+        if (isset($_POST['add_to_cart'])) {
+            $user_id = $_POST['user_id'];
+            $product_name = $_POST['product_name'];
+            $product_price = $_POST['price'];
+            $image_name = $_POST['image'];
+            // Define the quantity - assume 1 for simplicity, or you could modify this based on user input
+            $quantity = 1;
 
+
+            $check_cart_numbers = mysqli_query($conn, "SELECT * from `cart` where product_name='$product_name' and user_id='$user_id'") or die('query Failed');
+
+            if (mysqli_num_rows($check_cart_numbers) > 0) {
+                echo "<script>alert('Product already added to cart!');</script>";
+            } else {
+
+                mysqli_query($conn, "INSERT INTO `cart` (user_id, product_name, price, image, quantity)
+                VALUES ('$user_id', '$product_name', '$product_price', '$image_name', '$quantity')") or die('query failed');
+                echo "<script>alert('Product added to cart!');</script>";
+            }
+        }
 
 
 
@@ -24,18 +43,12 @@
 
         
         
-        // Check if the user is logged in
-        // if (!isset($_SESSION['admin'])) {
-        //     // If not logged in, redirect to the login page
-        //     header("Location: ../../account/php/login/login.php");
-        //     header("location:../../account/php/register/register.php");
-        //     exit();
-        // }
+    
         
         
 
 
-        // Check if the user is logged in
+    
         // if (!isset($_SESSION['admin'])) {
         //     // If not logged in, redirect to the login page
         //     header("Location: ../../account/php/login/login.php");
@@ -59,6 +72,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Clothing Palette</title>
+    <style>
+        .search-icon-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .search-icon-btn i {
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -72,31 +98,38 @@
                     <ul id="MenuItems">
                         <li><a href="../html/homepage.php">Home</a></li>
                         <li><a href="../../../features/product/html/product.php">Products</a></li>
-                        <li><a href="../../../features/about/html/about.html">About Us</a></li>
-                        <li><a href="../../../features/contact/html/contact.html">Contact Us</a></li>
-                        <li><a href="../../../features/account/php/register/register.html">Account</a></li>
+                        <li><a href="../../../features/about/html/about.php">About Us</a></li>
+                        <li><a href="../../../features/contact/html/contactpage.php">Contact Us</a></li>
+                        <li><a href="../../cart/html/order.php">Orders</a></li>
+                        <a href="../../account/php/register/register1.php"><i class="fa fa-fw fa-user"></i></a>
+                        <?php
+                        if (isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id']; // Get user ID from session
+                        } else {
+                            $user_id = null; // Set it to null if not logged in
+                        }
+                        $select_cart_number = mysqli_query($conn, "SELECT * FROM `cart` where user_id='$user_id'") or die('query failed');
+                        $cart_row_numbers = mysqli_num_rows($select_cart_number);
+
+                        ?>
+                        <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers; ?>)</span></a>
+
+                        <div class="input-wrapper">
+                            <form action="./search.php" method="POST" id="searchForm">
+                                <input type="search" name="search" placeholder="Search Product" id="searchInput">
+                                <!-- Search icon as a button -->
+                                <button type="submit" name="submit" class="search-icon-btn">
+                                    <i class="fa fa-search"></i> <!-- Search icon -->
+                                </button>
+                            </form>
+                        </div>
+
 
                     </ul>
-                    <!-- <a href="../../../features/cart/html/cart.html">
-                        <img src="../../../common/images/cart.webp" width="30px" height="30px">
-                    </a> -->
 
                     <img src="../images/menu.jpeg" class="menu-icon" onclick="menutoggle()">
                 </nav>
-                <div class="input-wrapper">
-                    <form action="./search.php" method="POST">
-                        <input type="search" name="search" placeholder="Search Product">
 
-                        <input type="submit" name="submit" value="Search" class="btn btn-primary">
-
-
-                    </form>
-                    <!-- <a href="../html/search.php"></a>
-                    <input type="search" name="search" placeholder="Search Product" class="search-field">
-                    <button class="search-submit" aria-label="search">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button> -->
-                </div>
             </div>
         </div>
     </div>
@@ -123,9 +156,10 @@
         $product_count = 0;
         if ($count2 > 0) {
             while ($row2 = mysqli_fetch_assoc($result2)) {
-
+                $id =$row2['categories_id'];
                 $title = $row2['title'];
                 $price = $row2['price'];
+                $quantity = $row2['quantity'];
                 $description = $row2['description'];
 
                 $image_name = $row2['image'];
@@ -157,9 +191,26 @@
                 <span>&#9734;</span>
                 <span>&#9734;</span>
                 <p><?php echo 'Rs.' . number_format($price, 2); ?></p>
-                    <br>
-                    <!-- Example Add to Cart Button for Each Product -->
-                    <button onclick="checkLoginStatus()" onclick="addToCart(1, 'Lace cardigan Sweater', 2800, '../../product/images/product5.jpg')">Add to Cart</button>
+                <br>
+                <!-- Example Add to Cart Button for Each Product -->
+                <form action="" method="POST">
+                    <input type="hidden" name="categories_id" value="<?php echo $id; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                    <input type="hidden" name="product_name" value="<?php echo $title; ?>">
+                    <input type="hidden" name="price" value="<?php echo $price; ?>"><br>
+                    <input type="hidden" name="image" value="<?php echo $image_name; ?>">
+
+
+                    <?php if ($quantity > 0) { ?>
+                        <button type="submit" class="btn" name="add_to_cart">Add to Cart</button>
+                    <?php } else { ?>
+                        <button type="submit" class="btn" name="btn" style="background-color:red;" disabled>Out of Stock</button>
+                    <?php } ?>
+
+
+
+                </form>
+
                 </div>
 
         <?php
@@ -212,85 +263,8 @@
 
     <!------js for  toggle menu-->
     <script src="../../../common/js/index.js"></script>
-    <script>
-        function addToCart(id, name, price, image) {
-            // Debugging: check if the function is triggered
-            console.log('Adding to cart:', {
-                id,
-                name,
-                price,
-                image
-            });
 
-            // Get existing cart from localStorage, or initialize it if not exists
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Check if the product is already in the cart
-            const existingProductIndex = cart.findIndex(item => item.id === id);
-            if (existingProductIndex !== -1) {
-                // If product is already in the cart, increase quantity
-                cart[existingProductIndex].quantity += 1;
-            } else {
-                // If it's a new product, add it to the cart
-                cart.push({
-                    id,
-                    name,
-                    price,
-                    image,
-                    quantity: 1
-                });
-            }
-
-            // Save updated cart to localStorage
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Debugging: check the cart after updating
-            console.log('Updated cart:', cart);
-
-            // Redirect to the cart page
-            window.location.href = "../../../features/cart/html/cart.html";
-        }
-    </script>
-    <script>
-        var productImg = document.getElementById("productImg")
-        var SmallImg = document.getElementsByClassName("small-img");
-
-        SmallImg[0].onclick = function() {
-            productImg.src = SmallImg[0].src;
-        }
-        SmallImg[1].onclick = function() {
-            productImg.src = SmallImg[1].src;
-        }
-        SmallImg[2].onclick = function() {
-            productImg.src = SmallImg[2].src;
-        }
-        SmallImg[3].onclick = function() {
-            productImg.src = SmallImg[3].src;
-        }
-
-        function menutoggle() {
-            const menuItems = document.getElementById("MenuItems");
-            if (menuItems.style.display === "block") {
-                menuItems.style.display = "none";
-            } else {
-                menuItems.style.display = "block";
-            }
-        }
-
-        function checkLoginStatus() {
-            // Replace this with your actual login check logic
-            var isLoggedIn = false; // Example: set to true if user is logged in
-
-            if (!isLoggedIn) {
-                // Redirect to the registration page
-                window.location.href = '../../account/php/register/register.html';
-            } else {
-                // Proceed with adding the item to the cart
-                // You can implement your add to cart logic here
-                alert('Item added to cart');
-            }
-        }
-    </script>
     <script src="../../product/js/product.js"></script>
 
 

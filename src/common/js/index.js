@@ -9,6 +9,7 @@ var MenuItems=document.getElementById("MenuItems");
         }
         else{
             MenuItems.style.maxHeight="0px"
-
         }
     }
+
+    

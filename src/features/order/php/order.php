@@ -14,14 +14,9 @@ if (!isset($user_id)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../common/css/1.css">
-
     <link rel="stylesheet" href="../css/order.css?v=2">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -39,6 +34,9 @@ if (!isset($user_id)) {
                     <ul id="MenuItems">
                         <li><a href="../../home/html/homepage.php">Home</a></li>
                         <li><a href="../../product/html/product.php">Products</a></li>
+
+                        <li><a href="../../about/html/about.php">About Us</a></li>
+                        <li><a href="../../contact/html/contactpage.php">Contact Us</a></li>
                         <?php
                         if (isset($_SESSION['user_id'])) {
                             $user_id = $_SESSION['user_id']; // Get user ID from session
@@ -50,9 +48,7 @@ if (!isset($user_id)) {
 
                         ?>
                         <a href="../../cart/html/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>(<?php echo $cart_row_numbers; ?>)</span></a>
-                        <li><a href="../../../features/account/php/logout/logout.php">Logout</a></li>
-                        <li><a href="../../about/html/about.html">About Us</a></li>
-                        <li><a href="../../contact/html/contact.html">Contact Us</a></li>
+
                     </ul>
                     <!-- <a href="../../../features/cart/html/cart.html">
                         <img src="../../../common/images/cart.webp" width="30px" height="30px">
